@@ -12,7 +12,7 @@ export const PROPTYPES = {
     offers: PropTypes.array.isRequired,
   },
 
-  offer: {
+  offerCard: {
     onHover: PropTypes.func,
     offer: PropTypes.shape({
       pictures: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
@@ -40,11 +40,14 @@ export const PROPTYPES = {
   },
 
   review: {
-    avatar: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    score: PropTypes.number.isRequired,
-    date: PropTypes.instanceOf(Date).isRequired,
-    message: PropTypes.string.isRequired,
+    review: PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      score: PropTypes.number.isRequired,
+      date: PropTypes.instanceOf(Date).isRequired,
+      message: PropTypes.string.isRequired,
+    }).isRequired
+
   }
 }
 ;

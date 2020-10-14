@@ -59,7 +59,7 @@ const OfferCard = ({onHover, offer}) => {
   );
 };
 
-OfferCard.propTypes = PROPTYPES.offer;
+OfferCard.propTypes = PROPTYPES.offerCard;
 
 export default OfferCard;
 
