@@ -15,8 +15,6 @@ const OfferCard = ({onHover, offer}) => {
   }
 
   return (
-
-
     <article className={cardClasses} onMouseEnter={onHover} >
 
       {isPremium &&
@@ -55,7 +53,6 @@ const OfferCard = ({onHover, offer}) => {
         <p className="place-card__type">{type}</p>
       </div>
     </article>
-
   );
 };
 

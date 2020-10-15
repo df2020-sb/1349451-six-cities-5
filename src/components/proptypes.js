@@ -15,6 +15,7 @@ export const PROPTYPES = {
   offerCard: {
     onHover: PropTypes.func,
     offer: PropTypes.shape({
+      coordinates: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
       pictures: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,

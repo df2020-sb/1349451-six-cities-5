@@ -36,6 +36,7 @@ const getRandomUniqueArrayElements = (array) => {
 export default [
 
   {
+    coordinates: [52.3909553943508, 4.85309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `The green room, enjoy and relax`,
     description: `The green room, a room to enjoy and relax. The room has a Queen size bed, a kitchenette, a small fridge with soft drinks, still and sparkling water, coffee and tea facilities, a small table inside, a lovely table outside in the garden and is decorated with modern art.Your bathroom is private, as well as your private entrance through the garden.`,
@@ -56,6 +57,7 @@ export default [
   },
 
   {
+    coordinates: [52.369553943508, 4.85309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `Entire serviced apartment hosted by Short Stay Group`,
     description: `The cosy 20sqm one-bedroom apartments are smartly furnished and located on the first and second floor of a rustic red-brick building. The compact design and open-plan living area allows up to two persons to work, live and sleep comfortably.`,
@@ -76,6 +78,7 @@ export default [
   },
 
   {
+    coordinates: [52.3909553943508, 4.929309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `Beautiful house with a pool`,
     description: `Very welcoming and with everything you need to spend a relaxing holiday. Free Wi-Fi internet in the house. It enjoys a splendid view of the Adeje coast. 50 square meters of terrace equipped with table for dining, sofa, armchairs and sun loungers. Heated swimming pool with bar service and small market.`,
@@ -96,6 +99,7 @@ export default [
   },
 
   {
+    coordinates: [52.3809553943508, 4.939309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `Cozy hotel downtown`,
     description: `Design-y boutique close to the trendy bars and restos of Shoreditch and Bethnal Green – and an easy 13-min tube ride into Central London. Hit up the all-day cafe for lite bites and salads, smoothies and craft cocktails.`,

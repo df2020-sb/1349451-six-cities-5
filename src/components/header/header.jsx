@@ -1,10 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {Link} from 'react-router-dom';
 
-const Header = ()=>{
+const Header = ({location})=>{
 
   return (
-
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
@@ -17,9 +17,11 @@ const Header = ()=>{
             <ul className="header__nav-list">
               <li className="header__nav-item user">
                 <Link className="header__nav-link header__nav-link--profile" to="/favorites">
-                  <div className="header__avatar-wrapper user__avatar-wrapper">
-                  </div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                  <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                  {location.indexOf(`/login`) > -1
+                    ? <span className="header__login">Sign in</span>
+                    : <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                  }
                 </Link>
               </li>
             </ul>
@@ -28,6 +30,11 @@ const Header = ()=>{
       </div>
     </header>
   );
+};
+
+
+Header.propTypes = {
+  location: PropTypes.string.isRequired
 };
 
 export default Header;

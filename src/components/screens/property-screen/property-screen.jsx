@@ -1,23 +1,25 @@
 import React, {Fragment} from "react";
-import {PROPTYPES} from "../proptypes";
-import OfferCard from "../offer-card/offer-card";
-import Review from "../review/review";
-import ReviewForm from "../review-form/review-form";
-import Header from "../header/header";
-import TopImage from "../top-image/top-image";
+import {PROPTYPES} from "../../proptypes";
+
+import Header from "../../header/header";
+import TopImage from "../../top-image/top-image";
+import Page from "../../page/page";
+import Main from "../../main/main";
+import OffersList from "../../offers-list/offers-list";
+import Review from "../../review/review";
+import ReviewForm from "../../review-form/review-form";
 
 const PropertyScreen = ({offers}) => {
   const offer = offers[0];
   const {pictures, title, isPremium, isBookmarked, rating, type, price, bedroomsCount, maxGuests, amenities, owner, description, reviews} = offer;
+  const location = window.location.href;
 
   return (
     <Fragment>
       <TopImage/>
-
-      <div className="page">
-
-        <Header/>
-        <main className="page__main page__main--property">
+      <Page className="page">
+        <Header location={location}/>
+        <Main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
@@ -99,15 +101,11 @@ const PropertyScreen = ({offers}) => {
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <div className="near-places__list places__list">
-                {offers.slice(1).map((nearOffer, i)=>(
-                  <OfferCard key={`${i}-${nearOffer.title}`} offer={nearOffer}/>
-                ))}
-              </div>
+              <OffersList location={location} offers={offers}></OffersList>
             </section>
           </div>
-        </main>
-      </div>
+        </Main>
+      </Page>
     </Fragment>
   );
 };

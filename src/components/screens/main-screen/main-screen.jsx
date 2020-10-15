@@ -1,21 +1,24 @@
 import React, {Fragment} from "react";
-import OffersList from "../offers-list/offers-list";
-import Header from "../header/header";
-import TopImage from "../top-image/top-image";
+import OffersList from "../../offers-list/offers-list";
+import Header from "../../header/header";
+import TopImage from "../../top-image/top-image";
+import Main from "../../main/main";
+import Page from "../../page/page";
+import Map from "../../map/map";
 
-import {PROPTYPES} from "../proptypes";
+import {PROPTYPES} from "../../proptypes";
 
 const MainScreen = (props) => {
 
   const {offersCount, offers} = props;
+  const location = window.location.href;
 
   return (
     <Fragment>
       <TopImage/>
-
-      <div className="page page--gray page--main">
-        <Header/>
-        <main className="page__main page__main--index">
+      <Page className="page page--gray page--main">
+        <Header location={location}/>
+        <Main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
@@ -81,15 +84,15 @@ const MainScreen = (props) => {
                 </select> */}
 
                 </form>
-                <OffersList offers={offers}></OffersList>
+                <OffersList location={location} offers={offers}></OffersList>
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <Map offers={offers}/>
               </div>
             </div>
           </div>
-        </main>
-      </div>
+        </Main>
+      </Page>
     </Fragment>
   );
 };
