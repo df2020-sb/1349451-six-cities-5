@@ -9,7 +9,7 @@ import OffersList from "../../offers-list/offers-list";
 import Review from "../../review/review";
 import ReviewForm from "../../review-form/review-form";
 
-const PropertyScreen = ({offers}) => {
+const PropertyScreen = ({offers, isLoggedIn}) => {
   const offer = offers[0];
   const {pictures, title, isPremium, isBookmarked, rating, type, price, bedroomsCount, maxGuests, amenities, owner, description, reviews} = offer;
   const location = window.location.href;
@@ -18,7 +18,7 @@ const PropertyScreen = ({offers}) => {
     <Fragment>
       <TopImage/>
       <Page className="page">
-        <Header location={location}/>
+        <Header isLoggedIn={isLoggedIn}/>
         <Main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
@@ -53,7 +53,7 @@ const PropertyScreen = ({offers}) => {
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: `${Math.round(rating) * 20}%`}}></span>
+                    <span style={{width: `${rating * 20}%`}}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">{rating}</span>

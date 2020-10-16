@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Main = (props) => {
 
   return (
-    <main >
+    <main>
       {props.children}
     </main>
   );

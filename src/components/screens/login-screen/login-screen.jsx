@@ -7,13 +7,11 @@ import Main from "../../main/main";
 
 const LoginScreen = () => {
 
-  const location = window.location.href;
-
   return (
     <Fragment>
       <TopImage/>
       <Page className="page page--gray page--login">
-        <Header location={location}/>
+        <Header isLoggedIn={false}/>
         <Main className="page__main page__main--login">
           <div className="page__login-container container">
             <section className="login">

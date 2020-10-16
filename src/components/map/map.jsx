@@ -2,10 +2,16 @@ import React, {PureComponent} from "react";
 import leaflet from 'leaflet';
 import {PROPTYPES} from "../proptypes";
 
+const ZOOM = 12;
+const ICON_SIZE = [30, 30];
+const CENTER = [52.38333, 4.9];
+
 class Map extends PureComponent {
 
   constructor(props) {
     super(props);
+
+    this.mapContainer = React.createRef();
 
     this.state = {
       activeOffer: this.props.offers[0],
@@ -15,38 +21,40 @@ class Map extends PureComponent {
   componentDidMount() {
     const offers = this.props.offers;
 
-    const city = [52.38333, 4.9];
     const icon = leaflet.icon({
       iconUrl: `img/pin.svg`,
-      iconSize: [30, 30]
+      iconSize: ICON_SIZE
     });
 
-    const zoom = 12;
-    const map = leaflet.map(`map`, {
-      center: city,
-      zoom,
+    const activeIcon = leaflet.icon({
+      iconUrl: `img/pin-active.svg`,
+      iconSize: ICON_SIZE
+    });
+
+    const map = leaflet.map(this.mapContainer.current, {
+      city: CENTER,
+      zoom: ZOOM,
       zoomControl: false,
       marker: true
     });
-    map.setView(city, zoom);
+
+    map.setView(CENTER, ZOOM);
 
     leaflet.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
     }).addTo(map);
 
-
-    offers.map((offer)=>{
+    offers.forEach((offer, i)=>{
       leaflet
-     .marker(offer.coordinates, {icon})
+     .marker(offer.coordinates, {icon: this.state.activeOffer === offers[i] ? activeIcon : icon})
      .addTo(map);
     });
-
   }
 
   render() {
     return (
       <section className="cities__map map">
-        <div id="map" style={{height: 1000}}></div>
+        <div ref={this.mapContainer} style={{height: 1000}}></div>
       </section>
     );
   }

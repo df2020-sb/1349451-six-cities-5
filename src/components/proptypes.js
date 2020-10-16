@@ -5,6 +5,7 @@ export const PROPTYPES = {
   app: {
     offersCount: PropTypes.number.isRequired,
     offers: PropTypes.array.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
   },
 
   mainScreen: {

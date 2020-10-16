@@ -17,7 +17,7 @@ const FavoritesScreen = ({offers}) => {
     <Fragment>
       <TopImage/>
       <Page className="page">
-        <Header location={location}/>
+        <Header isLoggedIn={true}/>
         <Main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">

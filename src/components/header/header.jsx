@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Link} from 'react-router-dom';
 
-const Header = ({location})=>{
+const Header = ({isLoggedIn})=>{
 
   return (
     <header className="header">
@@ -18,9 +18,9 @@ const Header = ({location})=>{
               <li className="header__nav-item user">
                 <Link className="header__nav-link header__nav-link--profile" to="/favorites">
                   <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                  {location.indexOf(`/login`) > -1
-                    ? <span className="header__login">Sign in</span>
-                    : <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                  {isLoggedIn
+                    ? <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    : <span className="header__login">Sign in</span>
                   }
                 </Link>
               </li>
@@ -34,7 +34,7 @@ const Header = ({location})=>{
 
 
 Header.propTypes = {
-  location: PropTypes.string.isRequired
+  isLoggedIn: PropTypes.bool.isRequired
 };
 
 export default Header;

@@ -10,14 +10,14 @@ import {PROPTYPES} from "../../proptypes";
 
 const MainScreen = (props) => {
 
-  const {offersCount, offers} = props;
+  const {offersCount, offers, isLoggedIn} = props;
   const location = window.location.href;
 
   return (
     <Fragment>
       <TopImage/>
       <Page className="page page--gray page--main">
-        <Header location={location}/>
+        <Header isLoggedIn={isLoggedIn}/>
         <Main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">

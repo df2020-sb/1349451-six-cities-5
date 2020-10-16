@@ -8,6 +8,6 @@ const Settings = {
 };
 
 ReactDOM.render(
-    <App offersCount={Settings.OFFERS_COUNT} offers={offers}/>,
+    <App offersCount={Settings.OFFERS_COUNT} offers={offers} isLoggedIn={true}/>,
     document.querySelector(`#root`)
 );
