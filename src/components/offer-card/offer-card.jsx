@@ -15,8 +15,6 @@ const OfferCard = ({onHover, offer}) => {
   }
 
   return (
-
-
     <article className={cardClasses} onMouseEnter={onHover} >
 
       {isPremium &&
@@ -45,7 +43,7 @@ const OfferCard = ({onHover, offer}) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${Math.round(rating) * 20}%`}}></span>
+            <span style={{width: `${rating * 20}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -55,11 +53,10 @@ const OfferCard = ({onHover, offer}) => {
         <p className="place-card__type">{type}</p>
       </div>
     </article>
-
   );
 };
 
-OfferCard.propTypes = PROPTYPES.offer;
+OfferCard.propTypes = PROPTYPES.offerCard;
 
 export default OfferCard;
 
