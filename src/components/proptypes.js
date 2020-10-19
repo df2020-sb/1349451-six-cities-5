@@ -50,6 +50,10 @@ export const PROPTYPES = {
       message: PropTypes.string.isRequired,
     }).isRequired
 
-  }
-}
-;
+  },
+
+  reviewsList: {
+    reviews: PropTypes.array.isRequired,
+  },
+
+};

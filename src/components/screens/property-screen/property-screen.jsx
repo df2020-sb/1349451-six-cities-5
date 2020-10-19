@@ -5,8 +5,8 @@ import Header from "../../header/header";
 import TopImage from "../../top-image/top-image";
 import Page from "../../page/page";
 import Main from "../../main/main";
-import OffersList from "../../offers-list/offers-list";
-import Review from "../../review/review";
+import NearPlaces from "../../near-places/near-places";
+import ReviewsList from "../../reviews-list/reviews-list";
 import ReviewForm from "../../review-form/review-form";
 
 const PropertyScreen = ({offers, isLoggedIn}) => {
@@ -88,22 +88,16 @@ const PropertyScreen = ({offers, isLoggedIn}) => {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                  <ul className="reviews__list">
-                    {reviews.map((review, i) => <Review key={`${i}-${review.name}`} review={review}/>)}
-                  </ul>
+                  <ReviewsList reviews={reviews}/>
                   <ReviewForm/>
                 </section>
               </div>
             </div>
-            <section className="property__map map"></section>
+            <section className="property__map map">
+
+s</section>
           </section>
-          <div className="container">
-            <section className="near-places places">
-              <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <OffersList location={location} offers={offers}></OffersList>
-            </section>
-          </div>
+          <NearPlaces location={location} offers={offers}/>
         </Main>
       </Page>
     </Fragment>
