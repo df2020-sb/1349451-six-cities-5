@@ -2,32 +2,28 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import {PROPTYPES} from "../proptypes";
 
-const OfferCard = ({onHover, offer}) => {
 
-  const {pictures, title, isPremium, isBookmarked, rating, type, price} = offer;
+const OfferCard = (props) => {
+  const {className = ``, pictureClassName = ``, offer, onHover, onMouseOut} = props;
+  const restProps = Object.assign({}, props);
+  delete restProps.pictureClassName;
 
-  let cardClasses = `cities__place-card place-card`;
-  let imageWrapperClasses = `cities__image-wrapper place-card__image-wrapper`;
-
-  if (window.location.href.indexOf(`/offer/`) > -1) {
-    cardClasses = `near-places__card place-card`;
-    imageWrapperClasses = `near-places__image-wrapper place-card__image-wrapper`;
-  }
+  const {id, pictures, title, isPremium, isBookmarked, rating, type, price} = offer;
 
   return (
-    <article className={cardClasses} onMouseEnter={onHover} >
+    <article className={className} onMouseEnter={onHover} onMouseLeave={onMouseOut}>
 
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-
-      <div className={imageWrapperClasses}>
-        <Link to={`/offer/0`}>
+      <div className={pictureClassName}>
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={pictures[0]} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
+
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
@@ -48,7 +44,7 @@ const OfferCard = ({onHover, offer}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/0`}>{title}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

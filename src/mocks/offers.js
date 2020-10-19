@@ -36,6 +36,7 @@ const getRandomUniqueArrayElements = (array) => {
 export default [
 
   {
+    id: `0`,
     coordinates: [52.3909553943508, 4.85309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `The green room, enjoy and relax`,
@@ -57,6 +58,7 @@ export default [
   },
 
   {
+    id: `1`,
     coordinates: [52.369553943508, 4.85309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `Entire serviced apartment hosted by Short Stay Group`,
@@ -78,6 +80,7 @@ export default [
   },
 
   {
+    id: `2`,
     coordinates: [52.3909553943508, 4.929309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `Beautiful house with a pool`,
@@ -99,6 +102,7 @@ export default [
   },
 
   {
+    id: `3`,
     coordinates: [52.3809553943508, 4.939309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `Cozy hotel downtown`,

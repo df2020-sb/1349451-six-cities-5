@@ -1,4 +1,5 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useState} from "react";
+import {useParams} from "react-router-dom";
 import {PROPTYPES} from "../../proptypes";
 
 import Header from "../../header/header";
@@ -8,11 +9,23 @@ import Main from "../../main/main";
 import NearPlaces from "../../near-places/near-places";
 import ReviewsList from "../../reviews-list/reviews-list";
 import ReviewForm from "../../review-form/review-form";
+import withMap from "../../../hocs/with-map/with-map";
 
-const PropertyScreen = ({offers, isLoggedIn}) => {
-  const offer = offers[0];
+
+const PropertyScreen = ({offers, isLoggedIn, renderMap}) => {
+  const {id} = useParams();
+  const offer = offers.find((selectedOffer) => selectedOffer.id === id);
   const {pictures, title, isPremium, isBookmarked, rating, type, price, bedroomsCount, maxGuests, amenities, owner, description, reviews} = offer;
-  const location = window.location.href;
+  const nearbyOffers = offers.filter((nearbyOffer) => nearbyOffer.id !== id);
+
+  const [activeOfferId, setActiveOfferId] = useState();
+
+  const handleCardHover = (activeOffer)=> {
+    setActiveOfferId(activeOffer.id);
+  };
+  const handleCardMouseOut = ()=>{
+    setActiveOfferId(``);
+  };
 
   return (
     <Fragment>
@@ -94,10 +107,14 @@ const PropertyScreen = ({offers, isLoggedIn}) => {
               </div>
             </div>
             <section className="property__map map">
-
-s</section>
+              {renderMap(nearbyOffers, activeOfferId)}
+            </section>
           </section>
-          <NearPlaces location={location} offers={offers}/>
+          <NearPlaces
+            currentPage={window.location.href}
+            offers={nearbyOffers}
+            onHover={handleCardHover}
+            onMouseOut={handleCardMouseOut}/>
         </Main>
       </Page>
     </Fragment>
@@ -106,4 +123,4 @@ s</section>
 
 PropertyScreen.propTypes = PROPTYPES.offer;
 
-export default PropertyScreen;
+export default withMap(PropertyScreen);

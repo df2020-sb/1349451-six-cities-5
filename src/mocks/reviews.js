@@ -2,6 +2,7 @@ const AVATAR_URL = `https://api.adorable.io/avatars/54`;
 
 export const REVIEWS = [
   {
+    offerId: `0`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `Anne`,
     score: 4,
@@ -10,6 +11,7 @@ export const REVIEWS = [
   },
 
   {
+    offerId: `1`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `Daniel`,
     score: 5,
@@ -18,6 +20,7 @@ export const REVIEWS = [
   },
 
   {
+    offerId: `2`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `Mauricio`,
     score: 4,
@@ -26,6 +29,7 @@ export const REVIEWS = [
   },
 
   {
+    offerId: `3`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `David`,
     score: 5,
@@ -34,6 +38,7 @@ export const REVIEWS = [
   },
 
   {
+    offerId: `0`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `Phil`,
     score: 5,
@@ -42,6 +47,7 @@ export const REVIEWS = [
   },
 
   {
+    offerId: `1`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `Margaret`,
     score: 5,
@@ -50,6 +56,7 @@ export const REVIEWS = [
   },
 
   {
+    offerId: `2`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `Kadie`,
     score: 5,
@@ -58,6 +65,7 @@ export const REVIEWS = [
   },
 
   {
+    offerId: `3`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `Chandler`,
     score: 5,
@@ -66,6 +74,7 @@ export const REVIEWS = [
   },
 
   {
+    offerId: `0`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `Helen`,
     score: 4,
@@ -74,6 +83,7 @@ export const REVIEWS = [
   },
 
   {
+    offerId: `1`,
     avatar: `${AVATAR_URL}/${Math.random()}`,
     name: `Rick`,
     score: 5,
