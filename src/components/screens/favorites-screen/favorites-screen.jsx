@@ -11,8 +11,6 @@ import Footer from "../../footer/footer";
 
 const FavoritesScreen = ({offers}) => {
 
-  const location = window.location.href;
-
   return (
     <Fragment>
       <TopImage/>
@@ -31,7 +29,7 @@ const FavoritesScreen = ({offers}) => {
                       </a>
                     </div>
                   </div>
-                  <OffersList location={location} offers={offers}></OffersList>
+                  <OffersList currentPage={window.location.href} offers={offers}></OffersList>
                 </li>
               </ul>
             </section>
