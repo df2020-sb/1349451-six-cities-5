@@ -37,6 +37,7 @@ export default [
 
   {
     id: `0`,
+    city: `Amsterdam`,
     coordinates: [52.3909553943508, 4.85309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `The green room, enjoy and relax`,
@@ -59,6 +60,7 @@ export default [
 
   {
     id: `1`,
+    city: `Amsterdam`,
     coordinates: [52.369553943508, 4.85309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `Entire serviced apartment hosted by Short Stay Group`,
@@ -81,6 +83,7 @@ export default [
 
   {
     id: `2`,
+    city: `Amsterdam`,
     coordinates: [52.3909553943508, 4.929309666406198],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `Beautiful house with a pool`,
@@ -103,7 +106,8 @@ export default [
 
   {
     id: `3`,
-    coordinates: [52.3809553943508, 4.939309666406198],
+    city: `Paris`,
+    coordinates: [48.856613, 2.352222],
     pictures: getRandomUniqueArrayElements(PHOTOS),
     title: `Cozy hotel downtown`,
     description: `Design-y boutique close to the trendy bars and restos of Shoreditch and Bethnal Green – and an easy 13-min tube ride into Central London. Hit up the all-day cafe for lite bites and salads, smoothies and craft cocktails.`,

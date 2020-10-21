@@ -4,7 +4,7 @@ import {PROPTYPES} from "../proptypes";
 
 const ZOOM = 12;
 const ICON_SIZE = [30, 30];
-const CENTER = [52.38333, 4.9];
+
 
 const icon = leaflet.icon({
   iconUrl: `img/pin.svg`,
@@ -41,13 +41,13 @@ class Map extends PureComponent {
   componentDidMount() {
 
     this.map = leaflet.map(this.mapContainer.current, {
-      city: CENTER,
+      city: this.props.centerCoords,
       zoom: ZOOM,
       zoomControl: false,
       marker: true
     });
 
-    this.map.setView(CENTER, ZOOM);
+    this.map.setView(this.props.centerCoords, ZOOM);
 
     leaflet.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
@@ -57,12 +57,13 @@ class Map extends PureComponent {
   }
 
   componentDidUpdate() {
+    this.map.setView(this.props.centerCoords).invalidateSize(ZOOM);
     this.renderMarkers();
   }
 
   render() {
     return (
-      <div ref={this.mapContainer} style={{height: `100%`}}></div>
+      <div ref={this.mapContainer} style={{height: `100%`}} backgroundcolor="red"></div>
     );
   }
 }
