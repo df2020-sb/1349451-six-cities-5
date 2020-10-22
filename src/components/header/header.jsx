@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from 'react-router-dom';
+import {connect} from "react-redux";
 
 const Header = ({isLoggedIn})=>{
 
@@ -33,8 +34,12 @@ const Header = ({isLoggedIn})=>{
 };
 
 
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.isLoggedIn
+});
+
 Header.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired
 };
 
-export default Header;
+export default connect(mapStateToProps)(Header);

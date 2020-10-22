@@ -2,9 +2,10 @@ import React from "react";
 import OfferCardMain from "../offer-card-main/offer-card-main";
 import OfferCardFavorites from "../offer-card-favorites/offer-card-favorites";
 import OfferCardNear from "../offer-card-near/offer-card-near";
+import {sortOffers} from "../../sort";
 import {PROPTYPES} from "../proptypes";
 
-const OffersList = ({currentPage, offers, onHover, onMouseOut}) => {
+const OffersList = ({currentPage, offers, currentSortType, onHover, onMouseOut}) => {
 
   const renderOffers = (offersList, Component)=>{
     return (
@@ -39,7 +40,7 @@ const OffersList = ({currentPage, offers, onHover, onMouseOut}) => {
       case page.indexOf(`/`) > -1:
         return (
           <div className="cities__places-list places__list tabs__content">
-            {renderOffers(offersList, OfferCardMain)}
+            {renderOffers(sortOffers(offersList, currentSortType), OfferCardMain)}
           </div>
         );
 

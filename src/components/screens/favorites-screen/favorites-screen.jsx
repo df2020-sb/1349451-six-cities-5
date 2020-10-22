@@ -1,5 +1,6 @@
 import React, {Fragment} from "react";
 import {PROPTYPES} from "../../proptypes";
+import {connect} from "react-redux";
 
 import TopImage from "../../top-image/top-image";
 import Page from "../../page/page";
@@ -9,13 +10,13 @@ import OffersList from "../../offers-list/offers-list";
 import Footer from "../../footer/footer";
 
 
-const FavoritesScreen = ({offers}) => {
+const FavoritesScreen = ({favoriteOffers}) => {
 
   return (
     <Fragment>
       <TopImage/>
       <Page className="page">
-        <Header isLoggedIn={true}/>
+        <Header/>
         <Main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">
@@ -29,7 +30,7 @@ const FavoritesScreen = ({offers}) => {
                       </a>
                     </div>
                   </div>
-                  <OffersList currentPage={window.location.href} offers={offers}></OffersList>
+                  <OffersList currentPage={window.location.href} offers={favoriteOffers}></OffersList>
                 </li>
               </ul>
             </section>
@@ -41,6 +42,10 @@ const FavoritesScreen = ({offers}) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  favoriteOffers: state.favoriteOffers
+});
+
 FavoritesScreen.propTypes = PROPTYPES.offer;
 
-export default FavoritesScreen;
+export default connect(mapStateToProps)(FavoritesScreen);

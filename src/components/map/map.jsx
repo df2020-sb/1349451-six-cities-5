@@ -5,7 +5,6 @@ import {PROPTYPES} from "../proptypes";
 const ZOOM = 12;
 const ICON_SIZE = [30, 30];
 
-
 const icon = leaflet.icon({
   iconUrl: `img/pin.svg`,
   iconSize: ICON_SIZE
@@ -15,7 +14,6 @@ const activeIcon = leaflet.icon({
   iconUrl: `img/pin-active.svg`,
   iconSize: ICON_SIZE
 });
-
 
 class Map extends PureComponent {
 
@@ -44,10 +42,17 @@ class Map extends PureComponent {
       city: this.props.centerCoords,
       zoom: ZOOM,
       zoomControl: false,
-      marker: true
+      marker: true,
     });
 
     this.map.setView(this.props.centerCoords, ZOOM);
+    this.map.scrollWheelZoom.disable();
+    this.map.on(`click`, () => {
+      this.map.scrollWheelZoom.enable();
+    });
+    this.map.on(`mouseout`, () => {
+      this.map.scrollWheelZoom.disable();
+    });
 
     leaflet.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`

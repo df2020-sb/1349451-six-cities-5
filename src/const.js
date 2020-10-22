@@ -24,3 +24,11 @@ export const CITIES = [
     coords: [51.227741, 6.773456]
   },
 ];
+
+
+export const SortType = {
+  POPULAR: `Popular`,
+  PRICE_UP: `Price: low to high`,
+  PRICE_DOWN: `Price: high to low`,
+  RATING: `Top rated first`
+};

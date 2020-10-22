@@ -7,24 +7,22 @@ import LoginScreen from "../screens/login-screen/login-screen";
 import FavoritesScreen from "../screens/favorites-screen/favorites-screen";
 import PropertyScreen from "../screens/property-screen/property-screen";
 
-const App = (props) => {
-  const {offersCount, offers, isLoggedIn} = props;
-  const favoriteOffers = offers.filter((offer)=>offer.isBookmarked);
+const App = () => {
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainScreen offersCount={offersCount} offers={offers} isLoggedIn={isLoggedIn}/>
+          <MainScreen />
         </Route>
         <Route exact path="/login">
           <LoginScreen />
         </Route>
         <Route exact path="/favorites">
-          <FavoritesScreen offers={favoriteOffers}/>
+          <FavoritesScreen />
         </Route>
         <Route exact path="/offer/:id">
-          <PropertyScreen offers={offers} isLoggedIn={isLoggedIn}/>
+          <PropertyScreen />
         </Route>
       </Switch>
     </BrowserRouter>

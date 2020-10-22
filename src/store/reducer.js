@@ -5,14 +5,16 @@ import {ActionType} from "./action";
 
 const initialCity = CITIES[0];
 const initialOffers = offers.filter((offer) => offer.city === initialCity.name);
-
+const favoriteOffers = offers.filter((offer)=>offer.isBookmarked);
 const getOffersByCity = (city)=> offers.filter((offer) => offer.city === city);
 
 
 const initialState = {
   selectedCity: initialCity,
   cityOffers: initialOffers,
-  isLoggedIn: true
+  favoriteOffers,
+  isLoggedIn: true,
+
 };
 
 const reducer = (state = initialState, action) => {

@@ -2,10 +2,6 @@ import PropTypes from "prop-types";
 
 export const PROPTYPES = {
 
-  mainScreen: {
-    offers: PropTypes.array.isRequired,
-  },
-
   offerCard: {
     pictureClassName: PropTypes.string.isRequired,
     onHover: PropTypes.func,

@@ -13,14 +13,13 @@ import withMap from "../../../hocs/with-map/with-map";
 import {connect} from "react-redux";
 
 
-const PropertyScreen = ({offers, renderMap, isLoggedIn, selectedCity}) => {
+const PropertyScreen = ({cityOffers, renderMap, selectedCity}) => {
 
   const {id} = useParams();
-  const offer = offers.find((selectedOffer) => selectedOffer.id === id);
+  const offer = cityOffers.find((selectedOffer) => selectedOffer.id === id);
   const {pictures, title, isPremium, isBookmarked, rating, type, price, bedroomsCount, maxGuests, amenities, owner, description, reviews} = offer;
 
-  const nearbyOffers = offers.filter((nearbyOffer) => nearbyOffer.city === selectedCity.name && nearbyOffer.id !== id);
-
+  const nearbyOffers = cityOffers.filter((nearbyOffer) => nearbyOffer.id !== id);
   const [activeOfferId, setActiveOfferId] = useState();
 
   const handleCardHover = (activeOffer)=> {
@@ -34,7 +33,7 @@ const PropertyScreen = ({offers, renderMap, isLoggedIn, selectedCity}) => {
     <Fragment>
       <TopImage/>
       <Page className="page">
-        <Header isLoggedIn={isLoggedIn}/>
+        <Header />
         <Main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
@@ -126,7 +125,7 @@ const PropertyScreen = ({offers, renderMap, isLoggedIn, selectedCity}) => {
 
 const mapStateToProps = (state) => ({
   selectedCity: state.selectedCity,
-  isLoggedIn: state.isLoggedIn
+  cityOffers: state.cityOffers,
 });
 
 PropertyScreen.propTypes = PROPTYPES.offer;
