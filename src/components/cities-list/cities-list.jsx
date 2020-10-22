@@ -1,14 +1,8 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment} from "react";
+import {PROPTYPES} from "../proptypes";
 
-const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
 
-const CitiesList = ()=>{
-
-  const [activeCity, setActiveCity] = useState(`Amsterdam`);
-
-  const handleCityClick = (evt)=>{
-    setActiveCity(evt.target.textContent);
-  };
+const CitiesList = ({cities, selectedCity, onCityClick})=>{
 
   return (
     <Fragment>
@@ -16,10 +10,10 @@ const CitiesList = ()=>{
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {CITIES.map((city)=>(
+            {cities.map((city)=>(
               <li className="locations__item" key={city}>
-                <a className={`locations__item-link tabs__item ${city === activeCity ? `tabs__item--active` : ``}`} href="#">
-                  <span onClick={handleCityClick}>{city}</span>
+                <a className={`locations__item-link tabs__item ${city === selectedCity ? `tabs__item--active` : ``}`} href="#">
+                  <span onClick={onCityClick}>{city}</span>
                 </a>
               </li>
             ))}
@@ -31,4 +25,8 @@ const CitiesList = ()=>{
   );
 };
 
+
+CitiesList.propTypes = PROPTYPES.citiesList;
+
 export default CitiesList;
+

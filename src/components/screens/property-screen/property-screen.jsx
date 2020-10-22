@@ -10,13 +10,16 @@ import NearPlaces from "../../near-places/near-places";
 import ReviewsList from "../../reviews-list/reviews-list";
 import ReviewForm from "../../review-form/review-form";
 import withMap from "../../../hocs/with-map/with-map";
+import {connect} from "react-redux";
 
 
-const PropertyScreen = ({offers, isLoggedIn, renderMap}) => {
+const PropertyScreen = ({offers, renderMap, isLoggedIn, selectedCity}) => {
+
   const {id} = useParams();
   const offer = offers.find((selectedOffer) => selectedOffer.id === id);
   const {pictures, title, isPremium, isBookmarked, rating, type, price, bedroomsCount, maxGuests, amenities, owner, description, reviews} = offer;
-  const nearbyOffers = offers.filter((nearbyOffer) => nearbyOffer.id !== id);
+
+  const nearbyOffers = offers.filter((nearbyOffer) => nearbyOffer.city === selectedCity.name && nearbyOffer.id !== id);
 
   const [activeOfferId, setActiveOfferId] = useState();
 
@@ -107,7 +110,7 @@ const PropertyScreen = ({offers, isLoggedIn, renderMap}) => {
               </div>
             </div>
             <section className="property__map map">
-              {renderMap(nearbyOffers, activeOfferId)}
+              {renderMap(nearbyOffers, activeOfferId, selectedCity.coords)}
             </section>
           </section>
           <NearPlaces
@@ -121,6 +124,11 @@ const PropertyScreen = ({offers, isLoggedIn, renderMap}) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  selectedCity: state.selectedCity,
+  isLoggedIn: state.isLoggedIn
+});
+
 PropertyScreen.propTypes = PROPTYPES.offer;
 
-export default withMap(PropertyScreen);
+export default connect(mapStateToProps)(withMap(PropertyScreen));

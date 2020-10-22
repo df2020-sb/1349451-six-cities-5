@@ -2,14 +2,7 @@ import PropTypes from "prop-types";
 
 export const PROPTYPES = {
 
-  app: {
-    offersCount: PropTypes.number.isRequired,
-    offers: PropTypes.array.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
-  },
-
   mainScreen: {
-    offersCount: PropTypes.number.isRequired,
     offers: PropTypes.array.isRequired,
   },
 
@@ -59,6 +52,8 @@ export const PROPTYPES = {
   },
 
   citiesList: {
-    cities: PropTypes.array.isRequired
-  }
+    cities: PropTypes.arrayOf(PropTypes.string).isRequired,
+    selectedCity: PropTypes.string.isRequired,
+    onCityClick: PropTypes.func.isRequired
+  },
 };
