@@ -12,7 +12,7 @@ export const PROPTYPES = {
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       isPremium: PropTypes.bool.isRequired,
-      isBookmarked: PropTypes.bool.isRequired,
+      isFavorite: PropTypes.bool.isRequired,
       type: PropTypes.string.isRequired,
       rating: PropTypes.number.isRequired,
       bedroomsCount: PropTypes.number.isRequired,
@@ -52,4 +52,9 @@ export const PROPTYPES = {
     selectedCity: PropTypes.string.isRequired,
     onCityClick: PropTypes.func.isRequired
   },
+
+  sort: {
+    currentSortType: PropTypes.string.isRequired,
+    handleSortTypeChange: PropTypes.func.isRequired
+  }
 };

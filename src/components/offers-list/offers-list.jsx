@@ -3,6 +3,7 @@ import OfferCardMain from "../offer-card-main/offer-card-main";
 import OfferCardFavorites from "../offer-card-favorites/offer-card-favorites";
 import OfferCardNear from "../offer-card-near/offer-card-near";
 import {sortOffers} from "../../sort";
+import {connect} from "react-redux";
 import {PROPTYPES} from "../proptypes";
 
 const OffersList = ({currentPage, offers, currentSortType, onHover, onMouseOut}) => {
@@ -51,6 +52,10 @@ const OffersList = ({currentPage, offers, currentSortType, onHover, onMouseOut})
   return getOffersListByPage(currentPage, offers);
 };
 
+const mapStateToProps = (state) => ({
+  currentSortType: state.currentSortType
+});
+
 OffersList.propTypes = PROPTYPES.offersList;
 
-export default OffersList;
+export default connect(mapStateToProps)(OffersList);

@@ -1,14 +1,17 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import {PROPTYPES} from "../proptypes";
+import {connect} from "react-redux";
+import {ActionCreator} from "../../store/action";
 
 
 const OfferCard = (props) => {
-  const {className = ``, pictureClassName = ``, offer, onHover, onMouseOut} = props;
+  const {className = ``, pictureClassName = ``, offer, onHover, onMouseOut, handleFavoriteClick} = props;
   const restProps = Object.assign({}, props);
   delete restProps.pictureClassName;
 
-  const {id, pictures, title, isPremium, isBookmarked, rating, type, price} = offer;
+  const {id, pictures, title, isPremium, isFavorite, rating, type, price} = offer;
+
 
   return (
     <article className={className} onMouseEnter={onHover} onMouseLeave={onMouseOut}>
@@ -30,11 +33,15 @@ const OfferCard = (props) => {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={`place-card__bookmark-button button ${isBookmarked ? `place-card__bookmark-button--active` : ``}`} type="button">
+          <button
+            className={`place-card__bookmark-button button ${isFavorite ? `place-card__bookmark-button--active` : ``}`}
+            type="button"
+            onClick={()=>handleFavoriteClick(id)}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">{isBookmarked ? `In bookmarks` : `To bookmarks`}</span>
+            <span className="visually-hidden">{isFavorite ? `In bookmarks` : `To bookmarks`}</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -52,7 +59,13 @@ const OfferCard = (props) => {
   );
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  handleFavoriteClick(id) {
+    dispatch(ActionCreator.toggleFavorite(id));
+  },
+});
+
 OfferCard.propTypes = PROPTYPES.offerCard;
 
-export default OfferCard;
+export default connect(null, mapDispatchToProps)(OfferCard);
 

@@ -13,13 +13,13 @@ import withMap from "../../../hocs/with-map/with-map";
 import {connect} from "react-redux";
 
 
-const PropertyScreen = ({cityOffers, renderMap, selectedCity}) => {
+const PropertyScreen = ({allOffers, renderMap, selectedCity}) => {
 
   const {id} = useParams();
-  const offer = cityOffers.find((selectedOffer) => selectedOffer.id === id);
+  const offer = allOffers.find((selectedOffer) => selectedOffer.id === id);
   const {pictures, title, isPremium, isBookmarked, rating, type, price, bedroomsCount, maxGuests, amenities, owner, description, reviews} = offer;
 
-  const nearbyOffers = cityOffers.filter((nearbyOffer) => nearbyOffer.id !== id);
+  const nearbyOffers = allOffers.filter((nearbyOffer) => nearbyOffer.city === selectedCity.name && nearbyOffer.id !== id);
   const [activeOfferId, setActiveOfferId] = useState();
 
   const handleCardHover = (activeOffer)=> {
@@ -125,7 +125,7 @@ const PropertyScreen = ({cityOffers, renderMap, selectedCity}) => {
 
 const mapStateToProps = (state) => ({
   selectedCity: state.selectedCity,
-  cityOffers: state.cityOffers,
+  allOffers: state.offers,
 });
 
 PropertyScreen.propTypes = PROPTYPES.offer;

@@ -8,7 +8,7 @@ import withMap from "../../../hocs/with-map/with-map";
 import CitiesList from "../../cities-list/cities-list";
 import NoOffers from "../../no-offers/no-offers";
 import Sort from "../../sort/sort";
-import {CITIES, SortType} from "../../../const";
+import {CITIES} from "../../../const";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../../store/action";
 import {PROPTYPES} from "../../proptypes";
@@ -17,17 +17,12 @@ const MainScreen = (props) => {
 
   const {renderMap, selectedCity, cityOffers, handleCityClick} = props;
   const [activeOfferId, setActiveOfferId] = useState();
-  const [currentSortType, setCurrentSortType] = useState(SortType.POPULAR);
 
   const handleCardHover = (activeOffer)=> {
     setActiveOfferId(activeOffer.id);
   };
   const handleCardMouseOut = ()=>{
     setActiveOfferId(``);
-  };
-
-  const handleSortTypeChange = (sortType)=>{
-    setCurrentSortType(sortType);
   };
 
   return (
@@ -43,11 +38,10 @@ const MainScreen = (props) => {
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>
                   <b className="places__found">{`${cityOffers.length} ${cityOffers.length > 1 ? `places` : `place`} to stay in ${selectedCity.name}`}</b>
-                  <Sort currentSortType={currentSortType} onSortTypeChange={handleSortTypeChange}/>
+                  <Sort />
                   <OffersList
                     currentPage={window.location.href}
                     offers={cityOffers}
-                    currentSortType={currentSortType}
                     onHover={handleCardHover}
                     onMouseOut={handleCardMouseOut}/>
                 </section>
@@ -66,13 +60,12 @@ const MainScreen = (props) => {
 };
 const mapStateToProps = (state) => ({
   selectedCity: state.selectedCity,
-  cityOffers: state.cityOffers,
+  cityOffers: state.offers.filter((offer) => offer.city === state.selectedCity.name),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleCityClick(evt) {
     dispatch(ActionCreator.changeCity(evt.target.textContent));
-    dispatch(ActionCreator.getOffers(evt.target.textContent));
   },
 });
 

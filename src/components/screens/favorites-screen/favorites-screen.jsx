@@ -43,7 +43,7 @@ const FavoritesScreen = ({favoriteOffers}) => {
 };
 
 const mapStateToProps = (state) => ({
-  favoriteOffers: state.favoriteOffers
+  favoriteOffers: state.offers.filter((offer) => offer.isFavorite),
 });
 
 FavoritesScreen.propTypes = PROPTYPES.offer;
