@@ -6,7 +6,7 @@ import {ActionCreator} from "../../store/action";
 
 
 const OfferCard = (props) => {
-  const {className = ``, pictureClassName = ``, offer, onHover, onMouseOut, handleFavoriteClick} = props;
+  const {className = ``, pictureClassName = ``, offer, onHover, onMouseOut, handleFavoriteClick, handleOfferClick} = props;
   const restProps = Object.assign({}, props);
   delete restProps.pictureClassName;
 
@@ -21,7 +21,7 @@ const OfferCard = (props) => {
           <span>Premium</span>
         </div>
       }
-      <div className={pictureClassName}>
+      <div className={pictureClassName} onClick={()=>handleOfferClick(id)}>
         <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={pictures[0]} width="260" height="200" alt="Place image"/>
         </Link>
@@ -50,7 +50,7 @@ const OfferCard = (props) => {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
+        <h2 className="place-card__name" onClick={()=>handleOfferClick(id)}>
           <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
@@ -59,13 +59,18 @@ const OfferCard = (props) => {
   );
 };
 
+
 const mapDispatchToProps = (dispatch) => ({
+
   handleFavoriteClick(id) {
     dispatch(ActionCreator.toggleFavorite(id));
+  },
+
+  handleOfferClick(id) {
+    dispatch(ActionCreator.chooseOffer(id));
   },
 });
 
 OfferCard.propTypes = PROPTYPES.offerCard;
 
 export default connect(null, mapDispatchToProps)(OfferCard);
-

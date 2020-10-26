@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import leaflet from 'leaflet';
 import {PROPTYPES} from "../proptypes";
+import {connect} from "react-redux";
 
 const ZOOM = 12;
 const ICON_SIZE = [30, 30];
@@ -73,6 +74,10 @@ class Map extends PureComponent {
   }
 }
 
+const mapStateToProps = (state) => ({
+  centerCoords: state.selectedCity.coords,
+});
+
 Map.propTypes = PROPTYPES.offersList;
 
-export default Map;
+export default connect(mapStateToProps)(Map);

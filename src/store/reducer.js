@@ -8,6 +8,7 @@ const initialCity = CITIES[0];
 const initialState = {
   selectedCity: initialCity,
   offers,
+  selectedOffer: null,
   currentSortType: SortType.POPULAR,
   isLoggedIn: true,
 };
@@ -32,6 +33,11 @@ const reducer = (state = initialState, action) => {
 
       return extend(state, {
         offers: [...state.offers.slice(0, index), toggledOffer, ...state.offers.slice(index + 1)]
+      });
+
+    case ActionType.CHOOSE_OFFER:
+      return extend(state, {
+        selectedOffer: state.offers.find((offer)=>offer.id === action.payload)
       });
   }
   return state;

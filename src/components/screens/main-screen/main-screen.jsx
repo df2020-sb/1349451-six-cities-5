@@ -12,6 +12,7 @@ import {CITIES} from "../../../const";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../../store/action";
 import {PROPTYPES} from "../../proptypes";
+import {sortOffers} from "../../../sort";
 
 const MainScreen = (props) => {
 
@@ -47,7 +48,7 @@ const MainScreen = (props) => {
                 </section>
                 <div className="cities__right-section">
                   <section className="cities__map map">
-                    {renderMap(cityOffers, activeOfferId, selectedCity.coords)}
+                    {renderMap(cityOffers, activeOfferId)}
                   </section>
                 </div>
               </div>
@@ -60,7 +61,7 @@ const MainScreen = (props) => {
 };
 const mapStateToProps = (state) => ({
   selectedCity: state.selectedCity,
-  cityOffers: state.offers.filter((offer) => offer.city === state.selectedCity.name),
+  cityOffers: sortOffers(state.offers.filter((offer) => offer.city === state.selectedCity.name), state.currentSortType),
 });
 
 const mapDispatchToProps = (dispatch) => ({

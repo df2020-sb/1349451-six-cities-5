@@ -12,6 +12,11 @@ const Sort = ({currentSortType, handleSortTypeChange})=>{
     setSortSelectState((prevState)=>prevState === `opened` ? `closed` : `opened`);
   };
 
+  const handleOptionClick = (evt) =>{
+    handleSortTypeChange(evt);
+    toggleSelect();
+  };
+
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
@@ -27,7 +32,7 @@ const Sort = ({currentSortType, handleSortTypeChange})=>{
           <li key={sortType}
             className={`places__option ${sortType === currentSortType ? `places__option--active` : ``}`}
             tabIndex="0"
-            onClick={handleSortTypeChange}>
+            onClick={handleOptionClick}>
             {sortType}
           </li>
         ))}
@@ -35,6 +40,7 @@ const Sort = ({currentSortType, handleSortTypeChange})=>{
     </form>
   );
 };
+
 const mapStateToProps = (state) => ({
   currentSortType: state.currentSortType
 });
