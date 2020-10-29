@@ -17,4 +17,4 @@ const ReviewsList = ({reviews})=>{
 
 ReviewsList.propTypes = PROPTYPES.reviewsList;
 
-export default ReviewsList;
+export default React.memo(ReviewsList);

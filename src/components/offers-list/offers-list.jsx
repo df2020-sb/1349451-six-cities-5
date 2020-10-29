@@ -1,8 +1,11 @@
 import React from "react";
+import {PROPTYPES} from "../proptypes";
+import {Page} from "../../const";
+
 import OfferCardMain from "../offer-card-main/offer-card-main";
 import OfferCardFavorites from "../offer-card-favorites/offer-card-favorites";
 import OfferCardNear from "../offer-card-near/offer-card-near";
-import {PROPTYPES} from "../proptypes";
+
 
 const OffersList = ({currentPage, offers, onHover, onMouseOut}) => {
 
@@ -12,7 +15,7 @@ const OffersList = ({currentPage, offers, onHover, onMouseOut}) => {
         <Component
           key={`${i}-${offer.title}`}
           offer={offer}
-          onHover={()=>onHover(offer)}
+          onHover={()=>onHover(offer.id)}
           onMouseOut={onMouseOut}/>
       ))
     );
@@ -20,23 +23,23 @@ const OffersList = ({currentPage, offers, onHover, onMouseOut}) => {
 
   const getOffersListByPage = (page, offersList) => {
 
-    switch (true) {
+    switch (page) {
 
-      case page.indexOf(`/favorites`) > -1:
+      case Page.FAVORITES:
         return (
           <div className="favorites__places">
             {renderOffers(offersList, OfferCardFavorites)}
           </div>
         );
 
-      case page.indexOf(`/offer/`) > -1:
+      case Page.OFFER:
         return (
           <div className="near-places__list places__list">
             {renderOffers(offersList, OfferCardNear)}
           </div>
         );
 
-      case page.indexOf(`/`) > -1:
+      case Page.MAIN:
         return (
           <div className="cities__places-list places__list tabs__content">
             {renderOffers(offersList, OfferCardMain)}

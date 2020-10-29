@@ -32,3 +32,12 @@ export const SortType = {
   PRICE_DOWN: `Price: high to low`,
   RATING: `Top rated first`
 };
+
+
+export const Page = {
+  MAIN: `MAIN`,
+  FAVORITES: `FAVORITES`,
+  LOGIN: `LOGIN`,
+  OFFER: `OFFER`
+}
+;

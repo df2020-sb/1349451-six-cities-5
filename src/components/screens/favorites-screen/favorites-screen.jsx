@@ -1,50 +1,60 @@
 import React, {Fragment} from "react";
-import {PROPTYPES} from "../../proptypes";
 import {connect} from "react-redux";
+import {PROPTYPES} from "../../proptypes";
+import {Page} from "../../../const";
 
 import TopImage from "../../top-image/top-image";
-import Page from "../../page/page";
 import Header from "../../header/header";
-import Main from "../../main/main";
 import OffersList from "../../offers-list/offers-list";
 import Footer from "../../footer/footer";
 
 
-const FavoritesScreen = ({favoriteOffers}) => {
+const FavoritesScreen = ({favoriteOffers, favoriteCities}) => {
 
   return (
     <Fragment>
       <TopImage/>
-      <Page className="page">
+      <div className="page">
         <Header/>
-        <Main className="page__main page__main--favorites">
+        <main className="page__main page__main--favorites">
           <div className="page__favorites-container container">
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                <li className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>Amsterdam</span>
-                      </a>
+                {favoriteCities.map((city)=>(
+                  <li key={city} className="favorites__locations-items">
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <a className="locations__item-link" href="#">
+                          <span>{city}</span>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                  <OffersList currentPage={window.location.href} offers={favoriteOffers}></OffersList>
-                </li>
+                    <OffersList
+                      currentPage={Page.FAVORITES}
+                      offers={favoriteOffers.filter((offer)=>offer.city === city)}>
+                    </OffersList>
+                  </li>
+                ))}
               </ul>
             </section>
           </div>
-        </Main>
+        </main>
         <Footer/>
-      </Page>
+      </div>
     </Fragment>
   );
 };
 
-const mapStateToProps = (state) => ({
-  favoriteOffers: state.offers.filter((offer) => offer.isFavorite),
-});
+const mapStateToProps = (state) => {
+  const favoriteOffers = state.offers.filter((offer) => offer.isFavorite);
+  const favoriteCities = Array.from(new Set(favoriteOffers.map((offer)=>offer.city)));
+
+  return ({
+    favoriteOffers,
+    favoriteCities
+  });
+};
 
 FavoritesScreen.propTypes = PROPTYPES.offer;
 

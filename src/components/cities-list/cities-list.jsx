@@ -28,7 +28,6 @@ const CitiesList = ({selectedCity, onCityClick})=>{
   );
 };
 
-
 CitiesList.propTypes = PROPTYPES.citiesList;
 
 export default React.memo(CitiesList);

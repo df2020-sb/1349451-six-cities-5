@@ -1,27 +1,23 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment} from "react";
+import {connect} from "react-redux";
+import {ActionCreator} from "../../../store/action";
+import {Page} from "../../../const";
+import {PROPTYPES} from "../../proptypes";
+import {sortOffers} from "../../../sort";
+
 import OffersList from "../../offers-list/offers-list";
 import Header from "../../header/header";
 import TopImage from "../../top-image/top-image";
 import withMap from "../../../hocs/with-map/with-map";
+import withActiveItem from "../../../hocs/with-active-item/with-active-item";
 import CitiesList from "../../cities-list/cities-list";
 import NoOffers from "../../no-offers/no-offers";
 import Sort from "../../sort/sort";
-import {connect} from "react-redux";
-import {ActionCreator} from "../../../store/action";
-import {PROPTYPES} from "../../proptypes";
-import {sortOffers} from "../../../sort";
+
 
 const MainScreen = (props) => {
 
-  const {renderMap, selectedCity, cityOffers, handleCityClick} = props;
-  const [activeOfferId, setActiveOfferId] = useState();
-
-  const handleCardHover = (activeOffer)=> {
-    setActiveOfferId(activeOffer.id);
-  };
-  const handleCardMouseOut = ()=>{
-    setActiveOfferId(``);
-  };
+  const {renderMap, selectedCity, cityOffers, handleCityClick, onCardHover, onCardMouseOut, activeOfferId} = props;
 
   return (
     <Fragment>
@@ -38,10 +34,10 @@ const MainScreen = (props) => {
                   <b className="places__found">{`${cityOffers.length} ${cityOffers.length > 1 ? `places` : `place`} to stay in ${selectedCity.name}`}</b>
                   <Sort />
                   <OffersList
-                    currentPage={window.location.href}
+                    currentPage={Page.MAIN}
                     offers={cityOffers}
-                    onHover={handleCardHover}
-                    onMouseOut={handleCardMouseOut}/>
+                    onHover={onCardHover}
+                    onMouseOut={onCardMouseOut}/>
                 </section>
                 <div className="cities__right-section">
                   <section className="cities__map map">
@@ -69,4 +65,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 MainScreen.propTypes = PROPTYPES.mainScreen;
 
-export default connect(mapStateToProps, mapDispatchToProps)(withMap(MainScreen));
+export default connect(mapStateToProps, mapDispatchToProps)(withMap(withActiveItem(MainScreen)));

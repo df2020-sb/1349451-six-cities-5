@@ -3,15 +3,34 @@ import {Link} from 'react-router-dom';
 import {PROPTYPES} from "../proptypes";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../store/action";
+import {useHistory} from "react-router-dom";
 
 
 const OfferCard = (props) => {
-  const {className = ``, pictureClassName = ``, offer, onHover, onMouseOut, handleFavoriteClick, handleOfferClick} = props;
+
+  const {
+    className = ``,
+    pictureClassName = ``,
+    offer,
+    onHover,
+    onMouseOut,
+    handleFavoriteToggle,
+    handleOfferClick,
+    isLoggedIn
+  } = props;
+
   const restProps = Object.assign({}, props);
   delete restProps.pictureClassName;
 
   const {id, pictures, title, isPremium, isFavorite, rating, type, price} = offer;
+  const history = useHistory();
 
+  const handleFavoriteClick = (favoriteId)=>{
+    if (!isLoggedIn) {
+      history.push(`/login`);
+    }
+    handleFavoriteToggle(favoriteId);
+  };
 
   return (
     <article className={className} onMouseEnter={onHover} onMouseLeave={onMouseOut}>
@@ -60,9 +79,13 @@ const OfferCard = (props) => {
 };
 
 
+const mapStateToProps = (state)=>({
+  isLoggedIn: state.isLoggedIn
+});
+
 const mapDispatchToProps = (dispatch) => ({
 
-  handleFavoriteClick(id) {
+  handleFavoriteToggle(id) {
     dispatch(ActionCreator.toggleFavorite(id));
   },
 
@@ -73,4 +96,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 OfferCard.propTypes = PROPTYPES.offerCard;
 
-export default connect(null, mapDispatchToProps)(OfferCard);
+export default connect(mapStateToProps, mapDispatchToProps)(OfferCard);

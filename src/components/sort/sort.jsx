@@ -1,16 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 import {SortType} from "../../const";
+import withSelect from "../../hocs/with-select/with-select";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../store/action";
 import {PROPTYPES} from "../proptypes";
 
 
-const Sort = ({currentSortType, handleSortTypeChange})=>{
-  const [sortSelectState, setSortSelectState] = useState(`closed`);
-
-  const toggleSelect = ()=>{
-    setSortSelectState((prevState)=>prevState === `opened` ? `closed` : `opened`);
-  };
+const Sort = ({currentSortType, handleSortTypeChange, selectCondition, toggleSelect})=>{
 
   const handleOptionClick = (evt) =>{
     handleSortTypeChange(evt);
@@ -27,7 +23,7 @@ const Sort = ({currentSortType, handleSortTypeChange})=>{
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom places__options--${sortSelectState}`}>
+      <ul className={`places__options places__options--custom places__options--${selectCondition}`}>
         {Object.values(SortType).map((sortType)=>(
           <li key={sortType}
             className={`places__option ${sortType === currentSortType ? `places__option--active` : ``}`}
@@ -53,4 +49,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 Sort.propTypes = PROPTYPES.sort;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sort);
+export default connect(mapStateToProps, mapDispatchToProps)(withSelect(Sort));
