@@ -48,7 +48,6 @@ export const PROPTYPES = {
   },
 
   citiesList: {
-    cities: PropTypes.arrayOf(PropTypes.string).isRequired,
     selectedCity: PropTypes.string.isRequired,
     onCityClick: PropTypes.func.isRequired
   },

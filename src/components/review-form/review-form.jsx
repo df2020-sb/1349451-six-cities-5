@@ -13,6 +13,11 @@ class ReviewForm extends PureComponent {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  checkVakidity() {
+    const messageLength = this.state.message.trim().length;
+    return this.state.score && (messageLength >= 50 && messageLength <= 300);
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
   }
@@ -25,6 +30,7 @@ class ReviewForm extends PureComponent {
       this.setState({message: value});
     }
   }
+
 
   render() {
     return (
@@ -71,7 +77,7 @@ class ReviewForm extends PureComponent {
           <p className="reviews__help">
                       To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
           </p>
-          <button className="reviews__submit form__submit button" type="submit" disabled="" onClick={this.handleSubmit}>Submit</button>
+          <button className="reviews__submit form__submit button" type="submit" disabled={!this.checkVakidity()} onClick={this.handleSubmit}>Submit</button>
         </div>
       </form>
     );

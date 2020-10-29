@@ -1,8 +1,11 @@
 import React, {Fragment} from "react";
+import {CITIES} from "../../const";
 import {PROPTYPES} from "../proptypes";
 
+const availableCities = CITIES.map((city)=>city.name);
 
-const CitiesList = ({cities, selectedCity, onCityClick})=>{
+const CitiesList = ({selectedCity, onCityClick})=>{
+
 
   return (
     <Fragment>
@@ -10,7 +13,7 @@ const CitiesList = ({cities, selectedCity, onCityClick})=>{
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {cities.map((city)=>(
+            {availableCities.map((city)=>(
               <li className="locations__item" key={city}>
                 <a className={`locations__item-link tabs__item ${city === selectedCity ? `tabs__item--active` : ``}`} href="#">
                   <span onClick={onCityClick}>{city}</span>
@@ -28,5 +31,5 @@ const CitiesList = ({cities, selectedCity, onCityClick})=>{
 
 CitiesList.propTypes = PROPTYPES.citiesList;
 
-export default CitiesList;
+export default React.memo(CitiesList);
 
