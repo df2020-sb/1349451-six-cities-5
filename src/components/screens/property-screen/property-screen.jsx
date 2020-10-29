@@ -1,5 +1,4 @@
 import React, {Fragment, useState} from "react";
-import {useParams} from "react-router-dom";
 import {PROPTYPES} from "../../proptypes";
 
 import Header from "../../header/header";
@@ -11,15 +10,11 @@ import ReviewsList from "../../reviews-list/reviews-list";
 import ReviewForm from "../../review-form/review-form";
 import withMap from "../../../hocs/with-map/with-map";
 import {connect} from "react-redux";
+import {ActionCreator} from "../../../store/action";
 
 
-const PropertyScreen = ({offers, renderMap, isLoggedIn, selectedCity}) => {
-
-  const {id} = useParams();
-  const offer = offers.find((selectedOffer) => selectedOffer.id === id);
-  const {pictures, title, isPremium, isBookmarked, rating, type, price, bedroomsCount, maxGuests, amenities, owner, description, reviews} = offer;
-
-  const nearbyOffers = offers.filter((nearbyOffer) => nearbyOffer.city === selectedCity.name && nearbyOffer.id !== id);
+const PropertyScreen = ({offer, nearbyOffers, handleFavoriteClick, renderMap}) => {
+  const {pictures, title, isPremium, isFavorite, rating, type, price, bedroomsCount, maxGuests, amenities, owner, description, reviews} = offer;
 
   const [activeOfferId, setActiveOfferId] = useState();
 
@@ -34,7 +29,7 @@ const PropertyScreen = ({offers, renderMap, isLoggedIn, selectedCity}) => {
     <Fragment>
       <TopImage/>
       <Page className="page">
-        <Header isLoggedIn={isLoggedIn}/>
+        <Header />
         <Main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
@@ -60,11 +55,14 @@ const PropertyScreen = ({offers, renderMap, isLoggedIn, selectedCity}) => {
                     {title}
                   </h1>
 
-                  <button className={`property__bookmark-button button ${isBookmarked ? `property__bookmark-button--active` : ``}`} type="button">
+                  <button
+                    className={`property__bookmark-button button ${isFavorite ? `property__bookmark-button--active` : ``}`}
+                    type="button"
+                    onClick={()=>handleFavoriteClick(offer.id)}>
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>
-                    <span className="visually-hidden">{isBookmarked ? `In bookmarks` : `To bookmarks`}</span>
+                    <span className="visually-hidden">{isFavorite ? `In bookmarks` : `To bookmarks`}</span>
                   </button>
                 </div>
                 <div className="property__rating rating">
@@ -110,7 +108,7 @@ const PropertyScreen = ({offers, renderMap, isLoggedIn, selectedCity}) => {
               </div>
             </div>
             <section className="property__map map">
-              {renderMap(nearbyOffers, activeOfferId, selectedCity.coords)}
+              {renderMap(nearbyOffers, activeOfferId)}
             </section>
           </section>
           <NearPlaces
@@ -125,10 +123,18 @@ const PropertyScreen = ({offers, renderMap, isLoggedIn, selectedCity}) => {
 };
 
 const mapStateToProps = (state) => ({
-  selectedCity: state.selectedCity,
-  isLoggedIn: state.isLoggedIn
+  offer: state.selectedOffer,
+  nearbyOffers: state.offers.filter((nearbyOffer) =>
+    nearbyOffer.city === state.selectedCity.name && nearbyOffer.id !== state.selectedOffer.id)
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+  handleFavoriteClick(id) {
+    dispatch(ActionCreator.toggleFavorite(id));
+  },
 });
 
 PropertyScreen.propTypes = PROPTYPES.offer;
 
-export default connect(mapStateToProps)(withMap(PropertyScreen));
+export default connect(mapStateToProps, mapDispatchToProps)(withMap(PropertyScreen));
