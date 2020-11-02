@@ -1,36 +1,27 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment} from "react";
+import {connect} from "react-redux";
+import {ActionCreator} from "../../../store/action";
+import {Page} from "../../../const";
 import {PROPTYPES} from "../../proptypes";
 
 import Header from "../../header/header";
 import TopImage from "../../top-image/top-image";
-import Page from "../../page/page";
-import Main from "../../main/main";
 import NearPlaces from "../../near-places/near-places";
 import ReviewsList from "../../reviews-list/reviews-list";
 import ReviewForm from "../../review-form/review-form";
 import withMap from "../../../hocs/with-map/with-map";
-import {connect} from "react-redux";
-import {ActionCreator} from "../../../store/action";
+import withActiveItem from "../../../hocs/with-active-item/with-active-item";
 
 
-const PropertyScreen = ({offer, nearbyOffers, handleFavoriteClick, renderMap}) => {
+const PropertyScreen = ({offer, nearbyOffers, handleFavoriteClick, renderMap, onCardHover, onCardMouseOut, activeOfferId}) => {
   const {pictures, title, isPremium, isFavorite, rating, type, price, bedroomsCount, maxGuests, amenities, owner, description, reviews} = offer;
-
-  const [activeOfferId, setActiveOfferId] = useState();
-
-  const handleCardHover = (activeOffer)=> {
-    setActiveOfferId(activeOffer.id);
-  };
-  const handleCardMouseOut = ()=>{
-    setActiveOfferId(``);
-  };
 
   return (
     <Fragment>
       <TopImage/>
-      <Page className="page">
+      <div className="page">
         <Header />
-        <Main className="page__main page__main--property">
+        <main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
@@ -112,12 +103,12 @@ const PropertyScreen = ({offer, nearbyOffers, handleFavoriteClick, renderMap}) =
             </section>
           </section>
           <NearPlaces
-            currentPage={window.location.href}
+            currentPage={Page.OFFER}
             offers={nearbyOffers}
-            onHover={handleCardHover}
-            onMouseOut={handleCardMouseOut}/>
-        </Main>
-      </Page>
+            onHover={onCardHover}
+            onMouseOut={onCardMouseOut}/>
+        </main>
+      </div>
     </Fragment>
   );
 };
@@ -137,4 +128,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 PropertyScreen.propTypes = PROPTYPES.offer;
 
-export default connect(mapStateToProps, mapDispatchToProps)(withMap(PropertyScreen));
+export default connect(mapStateToProps, mapDispatchToProps)(withMap(withActiveItem(PropertyScreen)));

@@ -9,4 +9,4 @@ const TopImage = () => {
   );
 };
 
-export default TopImage;
+export default React.memo(TopImage);

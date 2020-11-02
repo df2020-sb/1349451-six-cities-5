@@ -1,18 +1,15 @@
 import React, {Fragment} from "react";
 import TopImage from "../../top-image/top-image";
-import Page from "../../page/page";
 import Header from "../../header/header";
-import Main from "../../main/main";
-
 
 const LoginScreen = () => {
 
   return (
     <Fragment>
       <TopImage/>
-      <Page className="page page--gray page--login">
+      <div className="page page--gray page--login">
         <Header />
-        <Main className="page__main page__main--login">
+        <main className="page__main page__main--login">
           <div className="page__login-container container">
             <section className="login">
               <h1 className="login__title">Sign in</h1>
@@ -36,8 +33,8 @@ const LoginScreen = () => {
               </div>
             </section>
           </div>
-        </Main>
-      </Page>
+        </main>
+      </div>
     </Fragment>
   );
 };

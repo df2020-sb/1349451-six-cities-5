@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React, {Component} from "react";
 import leaflet from 'leaflet';
 import {PROPTYPES} from "../proptypes";
 import {connect} from "react-redux";
@@ -16,7 +16,7 @@ const activeIcon = leaflet.icon({
   iconSize: ICON_SIZE
 });
 
-class Map extends PureComponent {
+class Map extends Component {
 
   constructor(props) {
     super(props);
@@ -38,7 +38,6 @@ class Map extends PureComponent {
   }
 
   componentDidMount() {
-
     this.map = leaflet.map(this.mapContainer.current, {
       city: this.props.centerCoords,
       zoom: ZOOM,

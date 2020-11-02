@@ -43,12 +43,21 @@ export const PROPTYPES = {
     }).isRequired
   },
 
+  reviewForm: {
+    reviewForm: PropTypes.shape({
+      score: PropTypes.string.isRequired,
+      message: PropTypes.string.isRequired,
+      isValid: PropTypes.bool.isRequired,
+      onSubmit: PropTypes.func.isRequired,
+      onChange: PropTypes.func.isRequired
+    })
+  },
+
   reviewsList: {
     reviews: PropTypes.array.isRequired,
   },
 
   citiesList: {
-    cities: PropTypes.arrayOf(PropTypes.string).isRequired,
     selectedCity: PropTypes.string.isRequired,
     onCityClick: PropTypes.func.isRequired
   },
