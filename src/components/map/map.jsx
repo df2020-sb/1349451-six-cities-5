@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import leaflet from 'leaflet';
 import {PROPTYPES} from "../proptypes";
-import {connect} from "react-redux";
 
-const ZOOM = 12;
+
 const ICON_SIZE = [30, 30];
 
 const icon = leaflet.icon({
@@ -16,6 +15,8 @@ const activeIcon = leaflet.icon({
   iconSize: ICON_SIZE
 });
 
+let markers = [];
+
 class Map extends Component {
 
   constructor(props) {
@@ -26,26 +27,37 @@ class Map extends Component {
     this.renderMarkers = this.renderMarkers.bind(this);
   }
 
+
   renderMarkers() {
     const offers = this.props.offers;
     if (this.map) {
       offers.forEach((offer)=>{
-        leaflet
-     .marker(offer.coordinates, {icon: this.props.activeOfferId === offer.id ? activeIcon : icon})
-     .addTo(this.map);
+        let marker = leaflet.marker(
+            [offer.location.latitude, offer.location.longitude],
+            {icon: this.props.activeOfferId === offer.id ? activeIcon : icon}
+        ).addTo(this.map);
+        markers.push(marker);
       });
     }
   }
 
+  removeMarkers() {
+    markers.forEach((marker)=>this.map.removeLayer(marker));
+  }
+
   componentDidMount() {
+
+    const coords = [this.props.offers[0].city.location.latitude, this.props.offers[0].city.location.longitude];
+    const zoom = this.props.offers[0].city.location.zoom;
+
     this.map = leaflet.map(this.mapContainer.current, {
-      city: this.props.centerCoords,
-      zoom: ZOOM,
+      city: coords,
+      zoom,
       zoomControl: false,
       marker: true,
     });
 
-    this.map.setView(this.props.centerCoords, ZOOM);
+    this.map.setView(coords, zoom);
     this.map.scrollWheelZoom.disable();
     this.map.on(`click`, () => {
       this.map.scrollWheelZoom.enable();
@@ -62,7 +74,10 @@ class Map extends Component {
   }
 
   componentDidUpdate() {
-    this.map.setView(this.props.centerCoords).invalidateSize(ZOOM);
+    const coords = [this.props.offers[0].city.location.latitude, this.props.offers[0].city.location.longitude];
+    const zoom = this.props.offers[0].city.location.zoom;
+    this.removeMarkers();
+    this.map.setView(coords, zoom);
     this.renderMarkers();
   }
 
@@ -73,10 +88,6 @@ class Map extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  centerCoords: state.selectedCity.coords,
-});
-
 Map.propTypes = PROPTYPES.offersList;
 
-export default connect(mapStateToProps)(Map);
+export default Map;

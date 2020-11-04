@@ -1,6 +1,6 @@
 import React from "react";
 import {PROPTYPES} from "../proptypes";
-import {Page} from "../../const";
+import {AppRoute} from "../../const";
 
 import OfferCardMain from "../offer-card-main/offer-card-main";
 import OfferCardFavorites from "../offer-card-favorites/offer-card-favorites";
@@ -21,25 +21,25 @@ const OffersList = ({currentPage, offers, onHover, onMouseOut}) => {
     );
   };
 
-  const getOffersListByPage = (page, offersList) => {
+  const getOffersListByPage = (route, offersList) => {
 
-    switch (page) {
+    switch (route) {
 
-      case Page.FAVORITES:
+      case AppRoute.FAVORITES:
         return (
           <div className="favorites__places">
             {renderOffers(offersList, OfferCardFavorites)}
           </div>
         );
 
-      case Page.OFFER:
+      case AppRoute.OFFER:
         return (
           <div className="near-places__list places__list">
             {renderOffers(offersList, OfferCardNear)}
           </div>
         );
 
-      case Page.MAIN:
+      case AppRoute.MAIN:
         return (
           <div className="cities__places-list places__list tabs__content">
             {renderOffers(offersList, OfferCardMain)}
@@ -55,4 +55,4 @@ const OffersList = ({currentPage, offers, onHover, onMouseOut}) => {
 
 OffersList.propTypes = PROPTYPES.offersList;
 
-export default OffersList;
+export default React.memo(OffersList);

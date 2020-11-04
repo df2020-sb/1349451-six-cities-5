@@ -2,7 +2,7 @@ import React from "react";
 import {SortType} from "../../const";
 import withSelect from "../../hocs/with-select/with-select";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action";
+import {setSortType} from "../../store/action";
 import {PROPTYPES} from "../proptypes";
 
 
@@ -37,13 +37,13 @@ const Sort = ({currentSortType, handleSortTypeChange, selectCondition, toggleSel
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentSortType: state.currentSortType
+const mapStateToProps = ({APP_STATE}) => ({
+  currentSortType: APP_STATE.currentSortType
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleSortTypeChange(evt) {
-    dispatch(ActionCreator.setSortType(evt.target.textContent));
+    dispatch(setSortType(evt.target.textContent));
   },
 });
 

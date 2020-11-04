@@ -33,11 +33,17 @@ export const SortType = {
   RATING: `Top rated first`
 };
 
+export const AppRoute = {
+  LOGIN: `/login`,
+  OFFER: `/offer/:id`,
+  FAVORITES: `/favorites`,
+  MAIN: `/`,
+};
 
-export const Page = {
-  MAIN: `MAIN`,
-  FAVORITES: `FAVORITES`,
-  LOGIN: `LOGIN`,
-  OFFER: `OFFER`
-}
-;
+export const APIRoute = {
+  OFFERS_ALL: `/hotels`,
+  OFFERS_FAVORITE: `/favorite`,
+  COMMENTS: `/comments`,
+  LOGIN: `/login`,
+
+};

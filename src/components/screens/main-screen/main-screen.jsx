@@ -1,9 +1,8 @@
 import React, {Fragment} from "react";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../../store/action";
-import {Page} from "../../../const";
+import {changeCity} from "../../../store/action";
+import {AppRoute} from "../../../const";
 import {PROPTYPES} from "../../proptypes";
-import {sortOffers} from "../../../sort";
 
 import OffersList from "../../offers-list/offers-list";
 import Header from "../../header/header";
@@ -13,6 +12,7 @@ import withActiveItem from "../../../hocs/with-active-item/with-active-item";
 import CitiesList from "../../cities-list/cities-list";
 import NoOffers from "../../no-offers/no-offers";
 import Sort from "../../sort/sort";
+import {getCityOffers} from "../../../store/selectors";
 
 
 const MainScreen = (props) => {
@@ -34,7 +34,7 @@ const MainScreen = (props) => {
                   <b className="places__found">{`${cityOffers.length} ${cityOffers.length > 1 ? `places` : `place`} to stay in ${selectedCity.name}`}</b>
                   <Sort />
                   <OffersList
-                    currentPage={Page.MAIN}
+                    currentPage={AppRoute.MAIN}
                     offers={cityOffers}
                     onHover={onCardHover}
                     onMouseOut={onCardMouseOut}/>
@@ -52,14 +52,14 @@ const MainScreen = (props) => {
     </Fragment>
   );
 };
-const mapStateToProps = (state) => ({
-  selectedCity: state.selectedCity,
-  cityOffers: sortOffers(state.offers.filter((offer) => offer.city === state.selectedCity.name), state.currentSortType),
+const mapStateToProps = ({LOADED_DATA, APP_STATE}) => ({
+  selectedCity: APP_STATE.selectedCity,
+  cityOffers: getCityOffers({LOADED_DATA})(APP_STATE.selectedCity, APP_STATE.currentSortType)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleCityClick(evt) {
-    dispatch(ActionCreator.changeCity(evt.target.textContent));
+    dispatch(changeCity(evt.target.textContent));
   },
 });
 

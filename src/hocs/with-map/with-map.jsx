@@ -11,12 +11,11 @@ const withMap = (Component) => {
 
       return <Component
         {...this.props}
-        renderMap={(offers, activeOfferId, selectedCityCoords) => {
+        renderMap={(offers, activeOfferId) => {
           return (
             <Map
               offers={offers}
               activeOfferId={activeOfferId}
-              centerCoords={selectedCityCoords}
             />
           );
         }}
