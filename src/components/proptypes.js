@@ -75,10 +75,6 @@ export const PROPTYPES = {
     handleSortTypeChange: PropTypes.func.isRequired
   },
 
-  selectedOffer: {
-    selectedOffer: PropTypes.object.isRequired,
-    comments: PropTypes.array.isRequired
-  },
 
   property: {
     selectedOffer: PropTypes.object.isRequired,

@@ -10,12 +10,11 @@ import NearPlaces from "../../near-places/near-places";
 import ReviewsList from "../../reviews-list/reviews-list";
 import ReviewForm from "../../review-form/review-form";
 import withMap from "../../../hocs/with-map/with-map";
-import withActiveItem from "../../../hocs/with-active-item/with-active-item";
 
 
 const PropertyScreen = (props)=> {
 
-  const {selectedOffer, nearbyOffers, comments, handleFavoriteClick, renderMap, onCardHover, onCardMouseOut, activeOfferId} = props;
+  const {isLoggedIn, selectedOffer, nearbyOffers, comments, handleFavoriteClick, renderMap} = props;
 
   const {images, title, isPremium, isFavorite, rating, type, price, bedrooms, maxGuests, goods, host, description} = selectedOffer || {};
 
@@ -98,20 +97,19 @@ const PropertyScreen = (props)=> {
                   </div>
                   <section className="property__reviews reviews">
                     {comments.length ? <ReviewsList reviews={comments}/> : ``}
-                    <ReviewForm/>
+                    {isLoggedIn ? <ReviewForm/> : ``}
                   </section>
                 </div>
               </div>
               {!nearbyOffers.length ? `` :
                 <Fragment>
                   <section className="property__map map">
-                    {renderMap(nearbyOffers, activeOfferId)}
+                    {renderMap([selectedOffer, ...nearbyOffers], selectedOffer.id)}
                   </section>
                   <NearPlaces
                     currentPage={AppRoute.OFFER}
                     offers={nearbyOffers}
-                    onHover={onCardHover}
-                    onMouseOut={onCardMouseOut}/>
+                  />
                 </Fragment>
               }
             </section>
@@ -123,11 +121,12 @@ const PropertyScreen = (props)=> {
 };
 
 
-const mapStateToProps = ({LOADED_DATA}) => {
+const mapStateToProps = ({LOADED_DATA, USER}) => {
   return ({
     selectedOffer: LOADED_DATA.selectedOffer,
     nearbyOffers: LOADED_DATA.nearbyOffers,
     comments: LOADED_DATA.comments,
+    isLoggedIn: USER.isLoggedIn
   });
 };
 
@@ -140,4 +139,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 PropertyScreen.propTypes = PROPTYPES.offer;
 
-export default connect(mapStateToProps, mapDispatchToProps)(withMap(withActiveItem(PropertyScreen)));
+export default connect(mapStateToProps, mapDispatchToProps)(withMap(PropertyScreen));
