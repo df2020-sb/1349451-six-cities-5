@@ -18,4 +18,4 @@ const NearPlaces = ({currentPage, offers, onHover, onMouseOut})=>{
 
 NearPlaces.propTypes = PROPTYPES.offersList;
 
-export default NearPlaces;
+export default React.memo(NearPlaces);

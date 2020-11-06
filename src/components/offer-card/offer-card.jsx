@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import {PROPTYPES} from "../proptypes";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action";
+import {fetchSelectedOffer, fetchNearbyOffers, fetchSelectedOfferComments, toggleFavoriteStatus} from "../../store/api-actions";
 import {useHistory} from "react-router-dom";
 
 
@@ -22,14 +22,14 @@ const OfferCard = (props) => {
   const restProps = Object.assign({}, props);
   delete restProps.pictureClassName;
 
-  const {id, pictures, title, isPremium, isFavorite, rating, type, price} = offer;
+  const {id, images, title, isPremium, isFavorite, rating, type, price} = offer;
   const history = useHistory();
 
-  const handleFavoriteClick = (favoriteId)=>{
+  const handleFavoriteClick = (offerId, status)=>{
     if (!isLoggedIn) {
       history.push(`/login`);
     }
-    handleFavoriteToggle(favoriteId);
+    handleFavoriteToggle(offerId, status);
   };
 
   return (
@@ -42,7 +42,7 @@ const OfferCard = (props) => {
       }
       <div className={pictureClassName} onClick={()=>handleOfferClick(id)}>
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={pictures[0]} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
 
@@ -55,7 +55,7 @@ const OfferCard = (props) => {
           <button
             className={`place-card__bookmark-button button ${isFavorite ? `place-card__bookmark-button--active` : ``}`}
             type="button"
-            onClick={()=>handleFavoriteClick(id)}
+            onClick={()=>handleFavoriteClick(id, Number(isFavorite))}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -78,19 +78,21 @@ const OfferCard = (props) => {
   );
 };
 
-
-const mapStateToProps = (state)=>({
-  isLoggedIn: state.isLoggedIn
+const mapStateToProps = ({USER})=>({
+  isLoggedIn: USER.isLoggedIn,
 });
 
 const mapDispatchToProps = (dispatch) => ({
 
-  handleFavoriteToggle(id) {
-    dispatch(ActionCreator.toggleFavorite(id));
+  handleFavoriteToggle(id, status) {
+    dispatch(toggleFavoriteStatus(id, status));
   },
 
   handleOfferClick(id) {
-    dispatch(ActionCreator.chooseOffer(id));
+    dispatch(fetchSelectedOffer(id));
+    dispatch(fetchSelectedOfferComments(id));
+    dispatch(fetchNearbyOffers(id));
+
   },
 });
 
