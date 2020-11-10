@@ -1,7 +1,7 @@
 import {ActionType} from "../../action";
 
 const initialState = {
-  isLoggedIn: true
+  isLoggedIn: false
 };
 
 const user = (state = initialState, action) => {
