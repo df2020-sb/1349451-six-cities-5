@@ -1,4 +1,4 @@
-import {extend, adaptOfferToClient, adaptCommentToClient} from "../../../utils";
+import {extend, adaptOfferToClient, adaptCommentToClient, getIndex, addOffer, removeOffer, updateFavoriteFlag} from "../../../utils";
 import {ActionType} from "../../action";
 
 const initialState = {
@@ -39,15 +39,19 @@ const loadedData = (state = initialState, action) => {
       });
 
     case ActionType.TOGGLE_FAVORITE:
-      const index = state.offers.findIndex((offer)=>offer.id === action.payload);
-      const toggledOffer = state.offers[index];
-      toggledOffer.isFavorite = !toggledOffer.isFavorite;
+
+      const updateFavoriteOffers = (offers, update) => {
+        const favoriteIndex = getIndex(offers, update);
+        return favoriteIndex === -1 ? addOffer(offers, update) : removeOffer(offers, favoriteIndex);
+      };
 
       return extend(state, {
-        offers: [...state.offers.slice(0, index), toggledOffer, ...state.offers.slice(index + 1)]
+        offers: updateFavoriteFlag(state.offers, getIndex(state.offers, action.payload)),
+        nearbyOffers: updateFavoriteFlag(state.nearbyOffers, getIndex(state.nearbyOffers, action.payload)),
+        favoriteOffers: updateFavoriteOffers(state.favoriteOffers, action.payload)
       });
   }
+
   return state;
 };
-
 export {loadedData};

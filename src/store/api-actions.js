@@ -1,5 +1,5 @@
-import {loadOffers, changeAuth, redirectToRoute, getOffer, getNearbyOffers, getComments, toggleFavorite, loadFavoriteOffers} from "./action";
-import {AppRoute, APIRoute} from "../const";
+import {loadOffers, requireAuthorization, redirectToRoute, getOffer, getNearbyOffers, getComments, toggleFavorite, loadFavoriteOffers, getEmail} from "./action";
+import {AppRoute, APIRoute, AuthorizationStatus} from "../const";
 
 export const fetchAllOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS_ALL)
@@ -28,21 +28,23 @@ export const fetchSelectedOfferComments = (id) => (dispatch, _getState, api) => 
 
 export const toggleFavoriteStatus = (id, status) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.OFFERS_FAVORITE}/${id}/${status}`)
-    .then(({data}) => dispatch(toggleFavorite(data)))
+  .then(({data}) => dispatch(toggleFavorite(data)))
 );
 
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
-    .then(() => dispatch(changeAuth(true)))
-    .catch((err) => {
-      throw err;
+    .then(({data}) => {
+      dispatch(requireAuthorization(AuthorizationStatus.AUTH));
+      dispatch(getEmail(data.email));
     })
+    .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
-    .then(() => dispatch(changeAuth(true)))
-    .then(() => dispatch(redirectToRoute(AppRoute.FAVORITES)))
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
+    .then(() => dispatch(getEmail(email)))
 );
 

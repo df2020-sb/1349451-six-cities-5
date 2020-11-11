@@ -7,29 +7,34 @@ import rootReducer from "./store/reducers/root-reducer";
 import thunk from "redux-thunk";
 import {createAPI} from "./api";
 import {composeWithDevTools} from "redux-devtools-extension";
-import {changeAuth} from "./store/action";
-import {fetchAllOffers, checkAuth} from "./store/api-actions";
+import {requireAuthorization} from "./store/action";
+import {AuthorizationStatus} from "./const";
+import {fetchAllOffers, checkAuth, fetchFavoriteOffers} from "./store/api-actions";
+import {redirect} from "./store/middlewares/redirect";
 
 
 const api = createAPI(
-    () => store.dispatch(changeAuth(false))
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
-
 
 const store = createStore(
     rootReducer,
     composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api))
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
     )
 );
 
-store.dispatch(fetchAllOffers());
-
-// store.dispatch(checkAuth());
-
-ReactDOM.render(
-    <Provider store={store}>
-      <App />,
-    </Provider>,
-    document.querySelector(`#root`)
-);
+Promise.all([
+  store.dispatch(fetchAllOffers()),
+  store.dispatch(fetchFavoriteOffers()),
+  store.dispatch(checkAuth()),
+])
+.then(() => {
+  ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.querySelector(`#root`)
+  );
+});

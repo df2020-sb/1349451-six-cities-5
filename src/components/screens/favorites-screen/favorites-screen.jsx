@@ -17,9 +17,9 @@ const FavoritesScreen = ({favoriteOffers, favoriteCities}) => {
     <Fragment>
       <TopImage/>
       <div className="page">
-        {!favoriteOffers.length ? <NoFavorites/> :
-          <Fragment>
-            <Header/>
+        <Fragment>
+          <Header/>
+          {!favoriteOffers.length ? <NoFavorites/> :
             <main className="page__main page__main--favorites">
               <div className="page__favorites-container container">
                 <section className="favorites">
@@ -36,7 +36,7 @@ const FavoritesScreen = ({favoriteOffers, favoriteCities}) => {
                         </div>
                         <OffersList
                           currentPage={AppRoute.FAVORITES}
-                          offers={favoriteOffers.filter((offer)=>offer.city === city)}>
+                          offers={favoriteOffers.filter((offer)=>offer.city.name === city)}>
                         </OffersList>
                       </li>
                     ))}
@@ -44,8 +44,8 @@ const FavoritesScreen = ({favoriteOffers, favoriteCities}) => {
                 </section>
               </div>
             </main>
-          </Fragment>
-        }
+          }
+        </Fragment>
         <Footer/>
       </div>
     </Fragment>

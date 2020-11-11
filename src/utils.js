@@ -58,3 +58,28 @@ export const adaptCommentToClient = (comment) =>{
   return adaptedComment;
 };
 
+export const getIndex = (offers, update) => {
+  return offers.findIndex((item) => item.id === update.id);
+};
+
+export const addOffer = (offers, update) => {
+  return [update, ...offers];
+};
+
+export const removeOffer = (offers, index) =>{
+  return [...offers.slice(0, index), ...offers.slice(index + 1)
+  ];
+};
+
+export const updateFavoriteFlag = (offers, index) => {
+
+  let result = offers;
+
+  if (index !== -1) {
+    const toggledOffer = offers[index];
+    toggledOffer.isFavorite = !toggledOffer.isFavorite;
+    result = [...offers.slice(0, index), toggledOffer, ...offers.slice(index + 1)];
+  }
+
+  return result;
+};

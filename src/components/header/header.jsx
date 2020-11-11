@@ -1,10 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {PROPTYPES} from "../proptypes";
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux";
 import {fetchFavoriteOffers} from "../../store/api-actions";
+import {AuthorizationStatus, AppRoute} from "../../const";
 
-const Header = ({isLoggedIn, loadFavorites})=>{
+const Header = ({isLoggedIn, email, loadFavorites})=>{
 
   return (
     <header className="header">
@@ -18,10 +19,10 @@ const Header = ({isLoggedIn, loadFavorites})=>{
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user" onClick={loadFavorites}>
-                <Link className="header__nav-link header__nav-link--profile" to="/favorites">
+                <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
                   <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                   {isLoggedIn
-                    ? <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    ? <span className="header__user-name user__name">{email}</span>
                     : <span className="header__login">Sign in</span>
                   }
                 </Link>
@@ -36,7 +37,8 @@ const Header = ({isLoggedIn, loadFavorites})=>{
 
 
 const mapStateToProps = ({USER}) => ({
-  isLoggedIn: USER.isLoggedIn
+  isLoggedIn: USER.authorizationStatus === AuthorizationStatus.AUTH,
+  email: USER.email
 });
 
 const mapDispatchToProps = (dispatch)=>({
@@ -47,9 +49,7 @@ const mapDispatchToProps = (dispatch)=>({
 
 });
 
-Header.propTypes = {
-  isLoggedIn: PropTypes.bool.isRequired,
-  loadFavorites: PropTypes.func.isRequired,
-};
+Header.propTypes = PROPTYPES.header;
 
+export {Header};
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

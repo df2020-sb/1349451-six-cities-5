@@ -10,6 +10,7 @@ import OfferCardNear from "../offer-card-near/offer-card-near";
 const OffersList = ({currentPage, offers, onHover, onMouseOut}) => {
 
   const renderOffers = (offersList, Component)=>{
+
     return (
       offersList.map((offer, i)=>(
         <Component

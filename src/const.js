@@ -47,3 +47,13 @@ export const APIRoute = {
   LOGIN: `/login`,
 
 };
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
+export const PictureSize = {
+  MAIN: {width: `260`, height: `200`},
+  FAVORITES: {width: `150`, height: `110`},
+};

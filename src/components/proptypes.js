@@ -4,6 +4,8 @@ export const PROPTYPES = {
 
   offerCard: {
     pictureClassName: PropTypes.string.isRequired,
+    pictureWidth: PropTypes.string.isRequired,
+    pictureHeight: PropTypes.string.isRequired,
     onHover: PropTypes.func,
     offer: PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -85,5 +87,19 @@ export const PROPTYPES = {
     onCardHover: PropTypes.func.isRequired,
     onCardMouseOut: PropTypes.func.isRequired,
     activeOfferId: PropTypes.number.isRequired
+  },
+
+  privateRoute: {
+    authorizationStatus: PropTypes.string.isRequired,
+    exact: PropTypes.bool.isRequired,
+    path: PropTypes.string.isRequired,
+    render: PropTypes.func.isRequired,
+  },
+  header: {
+    isLoggedIn: PropTypes.bool.isRequired,
+    loadFavorites: PropTypes.func.isRequired,
+    email: PropTypes.string.isRequired
   }
+
+
 };
