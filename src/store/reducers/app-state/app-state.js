@@ -14,14 +14,13 @@ const appState = (state = initialState, action) => {
 
     case ActionType.CHANGE_CITY:
       return extend(state, {
-        selectedCity: CITIES.find((city) => city.name === action.payload),
+        selectedCity: CITIES.find((city) => city === action.payload),
       });
 
     case ActionType.SET_SORT_TYPE:
       return extend(state, {
         currentSortType: action.payload
       });
-
   }
   return state;
 };

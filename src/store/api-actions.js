@@ -11,10 +11,10 @@ export const fetchFavoriteOffers = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(loadFavoriteOffers(data)))
 );
 
-export const fetchSelectedOffer = (id) => (dispatch, _getState, api) => (
-  api.get(`${APIRoute.OFFERS_ALL}/${id}`)
-    .then(({data}) => dispatch(getOffer(data)))
-);
+// export const fetchSelectedOffer = (id) => (dispatch, _getState, api) => (
+//   api.get(`${APIRoute.OFFERS_ALL}/${id}`)
+//     .then(({data}) => dispatch(getOffer(data)))
+// );
 
 export const fetchNearbyOffers = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.OFFERS_ALL}/${id}/nearby`)
@@ -29,6 +29,7 @@ export const fetchSelectedOfferComments = (id) => (dispatch, _getState, api) => 
 export const toggleFavoriteStatus = (id, status) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.OFFERS_FAVORITE}/${id}/${status}`)
   .then(({data}) => dispatch(toggleFavorite(data)))
+  .catch(()=> dispatch(redirectToRoute(AppRoute.LOGIN)))
 );
 
 
@@ -48,3 +49,6 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(() => dispatch(getEmail(email)))
 );
 
+export const sendComment = (id) => (_dispatch, _getState, api) => (
+  api.post(`${APIRoute.COMMENTS}/${id}`)
+);

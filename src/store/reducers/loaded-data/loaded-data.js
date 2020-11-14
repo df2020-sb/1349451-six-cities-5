@@ -1,12 +1,11 @@
-import {extend, adaptOfferToClient, adaptCommentToClient, getIndex, addOffer, removeOffer, updateFavoriteFlag} from "../../../utils";
+import {extend, adaptOfferToClient, adaptCommentToClient, getIndex, updateFavoriteFlag} from "../../../utils";
 import {ActionType} from "../../action";
 
 const initialState = {
   offers: [],
-  selectedOffer: null,
   nearbyOffers: [],
   comments: [],
-  favoriteOffers: []
+  selectedOffer: null
 };
 
 const loadedData = (state = initialState, action) => {
@@ -15,11 +14,6 @@ const loadedData = (state = initialState, action) => {
     case ActionType.LOAD_OFFERS:
       return extend(state, {
         offers: action.payload.map((item)=>adaptOfferToClient(item))
-      });
-
-    case ActionType.GET_OFFER:
-      return extend(state, {
-        selectedOffer: adaptOfferToClient(action.payload)
       });
 
     case ActionType.LOAD_FAVORITE_OFFERS:
@@ -39,16 +33,14 @@ const loadedData = (state = initialState, action) => {
       });
 
     case ActionType.TOGGLE_FAVORITE:
-
-      const updateFavoriteOffers = (offers, update) => {
-        const favoriteIndex = getIndex(offers, update);
-        return favoriteIndex === -1 ? addOffer(offers, update) : removeOffer(offers, favoriteIndex);
-      };
-
       return extend(state, {
         offers: updateFavoriteFlag(state.offers, getIndex(state.offers, action.payload)),
         nearbyOffers: updateFavoriteFlag(state.nearbyOffers, getIndex(state.nearbyOffers, action.payload)),
-        favoriteOffers: updateFavoriteOffers(state.favoriteOffers, action.payload)
+      });
+
+    case ActionType.GET_OFFER:
+      return extend(state, {
+        selectedOffer: state.offers.find((offer)=> offer.id === action.payload)
       });
   }
 

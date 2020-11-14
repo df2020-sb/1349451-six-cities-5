@@ -10,7 +10,6 @@ const withForm = (Component) => {
         message: ``,
         isValid: false
       };
-      this.handleSubmit = this.handleSubmit.bind(this);
       this.handleChange = this.handleChange.bind(this);
     }
 
@@ -21,9 +20,6 @@ const withForm = (Component) => {
       }
     }
 
-    handleSubmit(evt) {
-      evt.preventDefault();
-    }
 
     handleChange(evt) {
       const value = evt.target.value;
@@ -44,7 +40,6 @@ const withForm = (Component) => {
           score={score}
           message={message}
           isValid={isValid}
-          onSubmit={this.handleSubmit}
           onChange={this.handleChange}
         />
       );

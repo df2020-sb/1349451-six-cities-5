@@ -2,10 +2,9 @@ import React from "react";
 import {PROPTYPES} from "../proptypes";
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux";
-import {fetchFavoriteOffers} from "../../store/api-actions";
 import {AuthorizationStatus, AppRoute} from "../../const";
 
-const Header = ({isLoggedIn, email, loadFavorites})=>{
+const Header = ({isLoggedIn, email})=>{
 
   return (
     <header className="header">
@@ -18,7 +17,7 @@ const Header = ({isLoggedIn, email, loadFavorites})=>{
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              <li className="header__nav-item user" onClick={loadFavorites}>
+              <li className="header__nav-item user">
                 <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
                   <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                   {isLoggedIn
@@ -41,15 +40,7 @@ const mapStateToProps = ({USER}) => ({
   email: USER.email
 });
 
-const mapDispatchToProps = (dispatch)=>({
-
-  loadFavorites() {
-    dispatch(fetchFavoriteOffers());
-  }
-
-});
-
 Header.propTypes = PROPTYPES.header;
 
 export {Header};
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps)(Header);

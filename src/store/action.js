@@ -29,9 +29,9 @@ export const toggleFavorite = (data) => ({
   payload: data
 });
 
-export const getOffer = (offer) => ({
+export const getOffer = (id) => ({
   type: ActionType.GET_OFFER,
-  payload: offer
+  payload: id
 });
 
 export const getNearbyOffers = (offers) => ({

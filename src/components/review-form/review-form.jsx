@@ -1,22 +1,22 @@
 import React, {Fragment} from "react";
+import {connect} from "react-redux";
 import withForm from "../../hocs/with-form/with-form";
+import {STARS_COUNT, StarTitle} from "../../const";
+import {sendComment, fetchSelectedOfferComments} from "../../store/api-actions";
 import {PROPTYPES} from "../proptypes";
 
-const STARS_COUNT = 5;
 
-const stars = new Array(STARS_COUNT).fill(null);
-const Title = {
-  1: `terrible`,
-  2: `bad`,
-  3: `not bad`,
-  4: `good`,
-  5: `perfect`
-};
+const ReviewForm = ({id, score, message, isValid, handleReviewSubmit, onChange}) => {
 
-const ReviewForm = ({score, message, isValid, onSubmit, onChange}) => {
+  const stars = new Array(STARS_COUNT).fill(null);
+
+  const onSubmit = (evt)=>{
+    evt.preventDefault();
+    handleReviewSubmit(id);
+  };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={onSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {stars.map((_, i)=>{
@@ -34,7 +34,7 @@ const ReviewForm = ({score, message, isValid, onSubmit, onChange}) => {
               <label
                 htmlFor={`${value}-stars`}
                 className="reviews__rating-label form__rating-label"
-                title={Title[STARS_COUNT - i]}>
+                title={StarTitle[STARS_COUNT - i]}>
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
                 </svg>
@@ -48,12 +48,19 @@ const ReviewForm = ({score, message, isValid, onSubmit, onChange}) => {
         <p className="reviews__help">
                       To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={!isValid} onClick={onSubmit}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={!isValid}>Submit</button>
       </div>
     </form>
   );
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  handleReviewSubmit: (id) => {
+    dispatch(sendComment(id));
+    dispatch(fetchSelectedOfferComments(id));
+  }
+});
+
 ReviewForm.propTypes = PROPTYPES.reviewsForm;
 
-export default withForm(ReviewForm);
+export default connect(null, mapDispatchToProps)(withForm(ReviewForm));

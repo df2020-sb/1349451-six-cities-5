@@ -9,7 +9,7 @@ import {createAPI} from "./api";
 import {composeWithDevTools} from "redux-devtools-extension";
 import {requireAuthorization} from "./store/action";
 import {AuthorizationStatus} from "./const";
-import {fetchAllOffers, checkAuth, fetchFavoriteOffers} from "./store/api-actions";
+import {fetchAllOffers, checkAuth} from "./store/api-actions";
 import {redirect} from "./store/middlewares/redirect";
 
 
@@ -27,7 +27,6 @@ const store = createStore(
 
 Promise.all([
   store.dispatch(fetchAllOffers()),
-  store.dispatch(fetchFavoriteOffers()),
   store.dispatch(checkAuth()),
 ])
 .then(() => {

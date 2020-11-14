@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import Map from "../../components/map/map";
+import {MARKER} from "../../const";
 
 const withMap = (Component) => {
   class WithMap extends PureComponent {
@@ -8,7 +9,6 @@ const withMap = (Component) => {
     }
 
     render() {
-
       return <Component
         {...this.props}
         renderMap={(offers, activeOfferId) => {
@@ -16,6 +16,7 @@ const withMap = (Component) => {
             <Map
               offers={offers}
               activeOfferId={activeOfferId}
+              marker={MARKER}
             />
           );
         }}

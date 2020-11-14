@@ -7,6 +7,7 @@ export const PROPTYPES = {
     pictureWidth: PropTypes.string.isRequired,
     pictureHeight: PropTypes.string.isRequired,
     onHover: PropTypes.func,
+    onCardMouseOut: PropTypes.func,
     offer: PropTypes.shape({
       id: PropTypes.number.isRequired,
       location: PropTypes.shape({
@@ -97,7 +98,6 @@ export const PROPTYPES = {
   },
   header: {
     isLoggedIn: PropTypes.bool.isRequired,
-    loadFavorites: PropTypes.func.isRequired,
     email: PropTypes.string.isRequired
   }
 

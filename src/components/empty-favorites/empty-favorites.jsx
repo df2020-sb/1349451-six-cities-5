@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 
-const NoFavorites = ()=>{
+const EmptyFavorites = ()=>{
 
   return (
     <Fragment>
@@ -19,4 +19,4 @@ const NoFavorites = ()=>{
   );
 };
 
-export default NoFavorites;
+export default EmptyFavorites;

@@ -1,30 +1,4 @@
-export const CITIES = [
-  {
-    name: `Paris`,
-    coords: [48.856613, 2.352222]
-  },
-  {
-    name: `Cologne`,
-    coords: [50.937531, 6.960279]
-  },
-  {
-    name: `Brussels`,
-    coords: [50.850346, 4.351721]
-  },
-  {
-    name: `Amsterdam`,
-    coords: [52.38333, 4.9]
-  },
-  {
-    name: `Hamburg`,
-    coords: [53.551086, 9.993682]
-  },
-  {
-    name: `Dusseldorf`,
-    coords: [51.227741, 6.773456]
-  },
-];
-
+export const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
 
 export const SortType = {
   POPULAR: `Popular`,
@@ -56,4 +30,26 @@ export const AuthorizationStatus = {
 export const PictureSize = {
   MAIN: {width: `260`, height: `200`},
   FAVORITES: {width: `150`, height: `110`},
+};
+
+export const MARKER = {
+  default: `img/pin.svg`,
+  active: `img/pin-active.svg`,
+  size: [30, 30]
+};
+
+export const MONTHS = [`January`, `February`, `March`, `April`, `May`, `June`,
+  `July`, `August`, `September`, `October`, `November`, `December`
+];
+
+
+export const STARS_COUNT = 5;
+
+
+export const StarTitle = {
+  1: `terrible`,
+  2: `bad`,
+  3: `not bad`,
+  4: `good`,
+  5: `perfect`
 };
