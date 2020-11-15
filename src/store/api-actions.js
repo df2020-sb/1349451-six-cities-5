@@ -1,4 +1,4 @@
-import {loadOffers, requireAuthorization, redirectToRoute, getOffer, getNearbyOffers, getComments, toggleFavorite, loadFavoriteOffers, getEmail} from "./action";
+import {loadOffers, requireAuthorization, redirectToRoute, getNearbyOffers, getComments, toggleFavorite, loadFavoriteOffers, getEmail} from "./action";
 import {AppRoute, APIRoute, AuthorizationStatus} from "../const";
 
 export const fetchAllOffers = () => (dispatch, _getState, api) => (
@@ -10,11 +10,6 @@ export const fetchFavoriteOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS_FAVORITE)
     .then(({data}) => dispatch(loadFavoriteOffers(data)))
 );
-
-// export const fetchSelectedOffer = (id) => (dispatch, _getState, api) => (
-//   api.get(`${APIRoute.OFFERS_ALL}/${id}`)
-//     .then(({data}) => dispatch(getOffer(data)))
-// );
 
 export const fetchNearbyOffers = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.OFFERS_ALL}/${id}/nearby`)

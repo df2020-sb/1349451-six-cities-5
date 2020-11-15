@@ -9,7 +9,6 @@ import OfferCardFavorites from "../../offer-card-favorites/offer-card-favorites"
 import Footer from "../../footer/footer";
 import EmptyFavorites from "../../empty-favorites/empty-favorites";
 import {getFavoriteCities, getFavoriteOffers} from "../../../store/selectors";
-import {fetchFavoriteOffers} from "../../../store/api-actions";
 
 const FavoritesScreen = ({favoriteOffers, favoriteCities}) => {
 
