@@ -1,4 +1,4 @@
-import {loadOffers, requireAuthorization, redirectToRoute, getNearbyOffers, getComments, toggleFavorite, loadFavoriteOffers, getEmail} from "./action";
+import {loadOffers, requireAuthorization, redirectToRoute, getNearbyOffers, getComments, toggleFavorite, loadFavoriteOffers, getEmail, getErrorMessage} from "./action";
 import {AppRoute, APIRoute, AuthorizationStatus} from "../const";
 
 export const fetchAllOffers = () => (dispatch, _getState, api) => (
@@ -44,6 +44,9 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(() => dispatch(getEmail(email)))
 );
 
-export const sendComment = (id) => (_dispatch, _getState, api) => (
-  api.post(`${APIRoute.COMMENTS}/${id}`)
+export const sendComment = (id, comment, rating, onSuccess) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.COMMENTS}/${id}`, {comment, rating})
+   .then(api.get(`${APIRoute.COMMENTS}/${id}`))
+   .then(({data}) => dispatch(getComments(data)))
+   .then(()=>onSuccess(), (error)=>dispatch(getErrorMessage(error)))
 );

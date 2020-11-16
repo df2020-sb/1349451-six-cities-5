@@ -9,7 +9,8 @@ export const ActionType = {
   LOAD_FAVORITE_OFFERS: `LOAD_FAVORITE_OFFERS`,
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
-  GET_EMAIL: `GET_EMAIL`
+  GET_EMAIL: `GET_EMAIL`,
+  GET_ERROR: `GET_ERROR`
 };
 
 
@@ -67,4 +68,9 @@ export const getEmail = (email) => ({
 export const redirectToRoute = (url) => ({
   type: ActionType.REDIRECT_TO_ROUTE,
   payload: url,
+});
+
+export const getErrorMessage = (message) => ({
+  type: ActionType.GET_ERROR,
+  payload: message,
 });
