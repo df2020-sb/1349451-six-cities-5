@@ -68,7 +68,6 @@ const OfferCard = (props) => {
   );
 };
 
-
 const mapDispatchToProps = (dispatch) => ({
   handleCardClick: (id)=>dispatch(getOffer(id)),
   handleFavoriteToggle: (id, status)=>dispatch(toggleFavoriteStatus(id, status))
