@@ -2,8 +2,9 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import {PROPTYPES} from "../proptypes";
 import {connect} from "react-redux";
-import {fetchSelectedOffer, fetchNearbyOffers, fetchSelectedOfferComments, toggleFavoriteStatus} from "../../store/api-actions";
-import {useHistory} from "react-router-dom";
+import {toggleFavoriteStatus} from "../../store/api-actions";
+import {AppRoute} from "../../const";
+import {getOffer} from "../../store/action";
 
 
 const OfferCard = (props) => {
@@ -11,38 +12,27 @@ const OfferCard = (props) => {
   const {
     className = ``,
     pictureClassName = ``,
+    pictureWidth,
+    pictureHeight,
     offer,
     onHover,
     onMouseOut,
     handleFavoriteToggle,
-    handleOfferClick,
-    isLoggedIn
+    handleCardClick,
   } = props;
 
-  const restProps = Object.assign({}, props);
-  delete restProps.pictureClassName;
-
   const {id, images, title, isPremium, isFavorite, rating, type, price} = offer;
-  const history = useHistory();
-
-  const handleFavoriteClick = (offerId, status)=>{
-    if (!isLoggedIn) {
-      history.push(`/login`);
-    }
-    handleFavoriteToggle(offerId, status);
-  };
 
   return (
     <article className={className} onMouseEnter={onHover} onMouseLeave={onMouseOut}>
-
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-      <div className={pictureClassName} onClick={()=>handleOfferClick(id)}>
+      <div className={pictureClassName} onClick={()=>handleCardClick(id)}>
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={images[0]} width={pictureWidth} height={pictureHeight} alt="Place image"/>
         </Link>
       </div>
 
@@ -55,7 +45,7 @@ const OfferCard = (props) => {
           <button
             className={`place-card__bookmark-button button ${isFavorite ? `place-card__bookmark-button--active` : ``}`}
             type="button"
-            onClick={()=>handleFavoriteClick(id, Number(isFavorite))}
+            onClick={()=>handleFavoriteToggle(id, Number(!isFavorite))}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -69,8 +59,8 @@ const OfferCard = (props) => {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name" onClick={()=>handleOfferClick(id)}>
-          <Link to={`/offer/${id}`}>{title}</Link>
+        <h2 className="place-card__name" onClick={()=>handleCardClick(id)}>
+          <Link to={`${AppRoute.OFFER}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -78,24 +68,12 @@ const OfferCard = (props) => {
   );
 };
 
-const mapStateToProps = ({USER})=>({
-  isLoggedIn: USER.isLoggedIn,
-});
 
 const mapDispatchToProps = (dispatch) => ({
-
-  handleFavoriteToggle(id, status) {
-    dispatch(toggleFavoriteStatus(id, status));
-  },
-
-  handleOfferClick(id) {
-    dispatch(fetchSelectedOffer(id));
-    dispatch(fetchSelectedOfferComments(id));
-    dispatch(fetchNearbyOffers(id));
-
-  },
+  handleCardClick: (id)=>dispatch(getOffer(id)),
+  handleFavoriteToggle: (id, status)=>dispatch(toggleFavoriteStatus(id, status))
 });
 
 OfferCard.propTypes = PROPTYPES.offerCard;
 
-export default connect(mapStateToProps, mapDispatchToProps)(OfferCard);
+export default connect(null, mapDispatchToProps)(OfferCard);

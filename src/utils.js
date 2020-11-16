@@ -1,3 +1,5 @@
+import {MONTHS} from "./const";
+
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
@@ -22,7 +24,6 @@ export const adaptOfferToClient = (offer) =>{
 
   return adaptedOffer;
 };
-
 
 export const adaptOfferToServer = (offer)=> {
   const adaptedOffer = extend(offer,
@@ -58,3 +59,23 @@ export const adaptCommentToClient = (comment) =>{
   return adaptedComment;
 };
 
+export const getIndex = (offers, update) => {
+  return offers.findIndex((item) => item.id === update.id);
+};
+
+export const updateFavoriteFlag = (offers, index) => {
+
+  let result = offers;
+
+  if (index !== -1) {
+    const toggledOffer = offers[index];
+    toggledOffer.isFavorite = !toggledOffer.isFavorite;
+    result = [...offers.slice(0, index), toggledOffer, ...offers.slice(index + 1)];
+  }
+
+  return result;
+};
+
+
+export const formatDateWithDashes = (date) => `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+export const formatDateMonthYear = (date) => `${MONTHS[date.getMonth()]} ${date.getFullYear()}`;

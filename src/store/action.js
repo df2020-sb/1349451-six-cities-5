@@ -8,7 +8,9 @@ export const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
   LOAD_FAVORITE_OFFERS: `LOAD_FAVORITE_OFFERS`,
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
-  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`
+  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
+  GET_EMAIL: `GET_EMAIL`,
+  GET_ERROR: `GET_ERROR`
 };
 
 
@@ -28,9 +30,9 @@ export const toggleFavorite = (data) => ({
   payload: data
 });
 
-export const getOffer = (offer) => ({
+export const getOffer = (id) => ({
   type: ActionType.GET_OFFER,
-  payload: offer
+  payload: id
 });
 
 export const getNearbyOffers = (offers) => ({
@@ -53,12 +55,22 @@ export const loadFavoriteOffers = (offers) => ({
   payload: offers,
 });
 
-export const changeAuth = (status) => ({
+export const requireAuthorization = (status) => ({
   type: ActionType.REQUIRE_AUTHORIZATION,
   payload: status,
+});
+
+export const getEmail = (email) => ({
+  type: ActionType.GET_EMAIL,
+  payload: email,
 });
 
 export const redirectToRoute = (url) => ({
   type: ActionType.REDIRECT_TO_ROUTE,
   payload: url,
+});
+
+export const getErrorMessage = (message) => ({
+  type: ActionType.GET_ERROR,
+  payload: message,
 });

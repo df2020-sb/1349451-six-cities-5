@@ -1,22 +1,24 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect} from "react";
 import {connect} from "react-redux";
-import {toggleFavorite} from "../../../store/action";
-import {AppRoute} from "../../../const";
 import {PROPTYPES} from "../../proptypes";
 
+import {AuthorizationStatus} from "../../../const";
 import Header from "../../header/header";
 import TopImage from "../../top-image/top-image";
 import NearPlaces from "../../near-places/near-places";
 import ReviewsList from "../../reviews-list/reviews-list";
 import ReviewForm from "../../review-form/review-form";
 import withMap from "../../../hocs/with-map/with-map";
-
+import {fetchNearbyOffers, toggleFavoriteStatus, fetchSelectedOfferComments, sendComment} from "../../../store/api-actions";
 
 const PropertyScreen = (props)=> {
 
-  const {isLoggedIn, selectedOffer, nearbyOffers, comments, handleFavoriteClick, renderMap} = props;
+  const {isLoggedIn, selectedOffer, nearbyOffers, comments, handleFavoriteToggle, renderMap, loadSelectedOffer} = props;
+  const {id, images, title, isPremium, isFavorite, rating, type, price, bedrooms, maxGuests, goods, host, description} = selectedOffer;
 
-  const {images, title, isPremium, isFavorite, rating, type, price, bedrooms, maxGuests, goods, host, description} = selectedOffer || {};
+  useEffect(()=>{
+    loadSelectedOffer(id);
+  }, []);
 
   return (
     <Fragment>
@@ -37,23 +39,20 @@ const PropertyScreen = (props)=> {
               </div>
               <div className="property__container container">
                 <div className="property__wrapper">
-
                   {isPremium &&
                   <div className="property__mark">
                     <span>Premium</span>
                   </div>
                   }
-
                   <div className="property__name-wrapper">
                     <h1 className="property__name">
                       {title}
                     </h1>
-
                     <button
                       className={`property__bookmark-button button ${isFavorite ? `property__bookmark-button--active` : ``}`}
                       type="button"
-                      onClick={()=>handleFavoriteClick(selectedOffer.id)}>
-                      <svg className="property__bookmark-icon" width="31" height="33">
+                      onClick={()=>handleFavoriteToggle(id, Number(!isFavorite))}>
+                      <svg className="place-card__bookmark-icon" width="31" height="33">
                         <use xlinkHref="#icon-bookmark"></use>
                       </svg>
                       <span className="visually-hidden">{isFavorite ? `In bookmarks` : `To bookmarks`}</span>
@@ -97,7 +96,7 @@ const PropertyScreen = (props)=> {
                   </div>
                   <section className="property__reviews reviews">
                     {comments.length ? <ReviewsList reviews={comments}/> : ``}
-                    {isLoggedIn ? <ReviewForm/> : ``}
+                    {isLoggedIn ? <ReviewForm id={id}/> : ``}
                   </section>
                 </div>
               </div>
@@ -107,7 +106,6 @@ const PropertyScreen = (props)=> {
                     {renderMap([selectedOffer, ...nearbyOffers], selectedOffer.id)}
                   </section>
                   <NearPlaces
-                    currentPage={AppRoute.OFFER}
                     offers={nearbyOffers}
                   />
                 </Fragment>
@@ -120,20 +118,23 @@ const PropertyScreen = (props)=> {
   );
 };
 
-
 const mapStateToProps = ({LOADED_DATA, USER}) => {
   return ({
-    selectedOffer: LOADED_DATA.selectedOffer,
+    selectedOffer: Object.assign({}, LOADED_DATA.selectedOffer),
     nearbyOffers: LOADED_DATA.nearbyOffers,
     comments: LOADED_DATA.comments,
-    isLoggedIn: USER.isLoggedIn
+    isLoggedIn: USER.authorizationStatus === AuthorizationStatus.AUTH,
   });
 };
 
-
 const mapDispatchToProps = (dispatch) => ({
-  handleFavoriteClick(id) {
-    dispatch(toggleFavorite(id));
+
+  handleFavoriteToggle: (id, status) => dispatch(toggleFavoriteStatus(id, status)),
+  handleReviewSubmit: (id) => dispatch(sendComment(id)),
+
+  loadSelectedOffer: (id) => {
+    dispatch(fetchSelectedOfferComments(id));
+    dispatch(fetchNearbyOffers(id));
   },
 });
 

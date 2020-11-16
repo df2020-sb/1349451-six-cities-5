@@ -7,6 +7,7 @@ const initialCity = CITIES[0];
 const initialState = {
   selectedCity: initialCity,
   currentSortType: SortType.POPULAR,
+  errorStatus: null
 };
 
 const appState = (state = initialState, action) => {
@@ -14,7 +15,7 @@ const appState = (state = initialState, action) => {
 
     case ActionType.CHANGE_CITY:
       return extend(state, {
-        selectedCity: CITIES.find((city) => city.name === action.payload),
+        selectedCity: CITIES.find((city) => city === action.payload),
       });
 
     case ActionType.SET_SORT_TYPE:
@@ -22,6 +23,10 @@ const appState = (state = initialState, action) => {
         currentSortType: action.payload
       });
 
+    case ActionType.GET_ERROR:
+      return extend(state, {
+        errorStatus: action.payload.response.status
+      });
   }
   return state;
 };

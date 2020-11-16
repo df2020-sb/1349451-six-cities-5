@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const NoOffers = ({city})=>{
+const EmptyOffers = ({city})=>{
 
   return (
     <div className="cities">
@@ -20,6 +20,6 @@ const NoOffers = ({city})=>{
   );
 };
 
-NoOffers.propTypes = PropTypes.string.isRequired;
+EmptyOffers.propTypes = PropTypes.string.isRequired;
 
-export default NoOffers;
+export default EmptyOffers;

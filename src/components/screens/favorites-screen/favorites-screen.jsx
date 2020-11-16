@@ -1,15 +1,14 @@
 import React, {Fragment} from "react";
 import {connect} from "react-redux";
 import {PROPTYPES} from "../../proptypes";
-import {AppRoute} from "../../../const";
 
 import TopImage from "../../top-image/top-image";
 import Header from "../../header/header";
 import OffersList from "../../offers-list/offers-list";
+import OfferCardFavorites from "../../offer-card-favorites/offer-card-favorites";
 import Footer from "../../footer/footer";
-import NoFavorites from "../../no-favorites/no-favorites";
-import {getFavoriteOffers, getFavoriteCities} from "../../../store/selectors";
-
+import EmptyFavorites from "../../empty-favorites/empty-favorites";
+import {getFavoriteCities, getFavoriteOffers} from "../../../store/selectors";
 
 const FavoritesScreen = ({favoriteOffers, favoriteCities}) => {
 
@@ -17,9 +16,9 @@ const FavoritesScreen = ({favoriteOffers, favoriteCities}) => {
     <Fragment>
       <TopImage/>
       <div className="page">
-        {!favoriteOffers.length ? <NoFavorites/> :
-          <Fragment>
-            <Header/>
+        <Fragment>
+          <Header/>
+          {!favoriteOffers.length ? <EmptyFavorites/> :
             <main className="page__main page__main--favorites">
               <div className="page__favorites-container container">
                 <section className="favorites">
@@ -35,8 +34,9 @@ const FavoritesScreen = ({favoriteOffers, favoriteCities}) => {
                           </div>
                         </div>
                         <OffersList
-                          currentPage={AppRoute.FAVORITES}
-                          offers={favoriteOffers.filter((offer)=>offer.city === city)}>
+                          className="favorites__places"
+                          offers={favoriteOffers.filter((offer)=>offer.city.name === city)}
+                          Component={OfferCardFavorites}>
                         </OffersList>
                       </li>
                     ))}
@@ -44,8 +44,8 @@ const FavoritesScreen = ({favoriteOffers, favoriteCities}) => {
                 </section>
               </div>
             </main>
-          </Fragment>
-        }
+          }
+        </Fragment>
         <Footer/>
       </div>
     </Fragment>

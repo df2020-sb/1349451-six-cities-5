@@ -2,31 +2,18 @@ import React, {Component} from "react";
 import leaflet from 'leaflet';
 import {PROPTYPES} from "../proptypes";
 
-
-const ICON_SIZE = [30, 30];
-
-const icon = leaflet.icon({
-  iconUrl: `img/pin.svg`,
-  iconSize: ICON_SIZE
-});
-
-const activeIcon = leaflet.icon({
-  iconUrl: `img/pin-active.svg`,
-  iconSize: ICON_SIZE
-});
-
-let markers = [];
-
 class Map extends Component {
 
   constructor(props) {
     super(props);
 
     this.mapContainer = React.createRef();
-    this.map = null;
     this.renderMarkers = this.renderMarkers.bind(this);
+    this.map = null;
+    this.markers = [];
+    this.icon = leaflet.icon({iconUrl: this.props.marker.default, iconSize: this.props.marker.size});
+    this.activeIcon = leaflet.icon({iconUrl: this.props.marker.active, iconSize: this.props.marker.size});
   }
-
 
   renderMarkers() {
     const offers = this.props.offers;
@@ -34,15 +21,15 @@ class Map extends Component {
       offers.forEach((offer)=>{
         let marker = leaflet.marker(
             [offer.location.latitude, offer.location.longitude],
-            {icon: this.props.activeOfferId === offer.id ? activeIcon : icon}
+            {icon: this.props.activeOfferId === offer.id ? this.activeIcon : this.icon}
         ).addTo(this.map);
-        markers.push(marker);
+        this.markers.push(marker);
       });
     }
   }
 
   removeMarkers() {
-    markers.forEach((marker)=>this.map.removeLayer(marker));
+    this.markers.forEach((marker)=>this.map.removeLayer(marker));
   }
 
   componentDidMount() {

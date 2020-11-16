@@ -6,12 +6,12 @@ const withForm = (Component) => {
       super(props);
 
       this.state = {
-        score: ``,
+        score: 0,
         message: ``,
         isValid: false
       };
-      this.handleSubmit = this.handleSubmit.bind(this);
       this.handleChange = this.handleChange.bind(this);
+      this.onSuccess = this.onSuccess.bind(this);
     }
 
     checkValidity() {
@@ -21,18 +21,17 @@ const withForm = (Component) => {
       }
     }
 
-    handleSubmit(evt) {
-      evt.preventDefault();
-    }
-
     handleChange(evt) {
-      const value = evt.target.value;
       if (evt.target.tagName === `INPUT`) {
-        this.setState({score: value});
+        this.setState({score: Number(evt.target.value)});
       } else {
-        this.setState({message: value});
+        this.setState({message: evt.target.value});
       }
       this.checkValidity();
+    }
+
+    onSuccess() {
+      this.setState({message: ``, score: 0});
     }
 
     render() {
@@ -44,8 +43,8 @@ const withForm = (Component) => {
           score={score}
           message={message}
           isValid={isValid}
-          onSubmit={this.handleSubmit}
           onChange={this.handleChange}
+          onSuccess={this.onSuccess}
         />
       );
     }

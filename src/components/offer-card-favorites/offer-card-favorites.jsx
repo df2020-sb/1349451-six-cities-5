@@ -1,5 +1,6 @@
 import React from "react";
 import OfferCard from "../offer-card/offer-card";
+import {PictureSize} from "../../const";
 
 const OfferCardFavorites = (props) => {
 
@@ -8,7 +9,12 @@ const OfferCardFavorites = (props) => {
   delete restProps.onMouseOut;
 
   return (
-    <OfferCard className="favorites__card place-card" pictureClassName="favorites__image-wrapper place-card__image-wrapper" {...restProps} />
+    <OfferCard
+      className="favorites__card place-card"
+      pictureClassName="favorites__image-wrapper place-card__image-wrapper"
+      pictureWidth={PictureSize.FAVORITES.width}
+      pictureHeight={PictureSize.FAVORITES.height}
+      {...restProps} />
   );
 };
 

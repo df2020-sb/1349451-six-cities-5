@@ -1,9 +1,7 @@
 import React from "react";
 import {PROPTYPES} from "../proptypes";
+import {formatDateMonthYear, formatDateWithDashes} from "../../utils";
 
-const MONTHS = [`January`, `February`, `March`, `April`, `May`, `June`,
-  `July`, `August`, `September`, `October`, `November`, `December`
-];
 
 const Review = ({review}) => {
 
@@ -25,7 +23,7 @@ const Review = ({review}) => {
           </div>
         </div>
         <p className="reviews__text">{comment}</p>
-        <time className="reviews__time" dateTime={`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`}>{`${MONTHS[date.getMonth()]} ${date.getFullYear()}`}</time>
+        <time className="reviews__time" dateTime={formatDateWithDashes(date)}>{formatDateMonthYear(date)}</time>
       </div>
     </li>
   );
